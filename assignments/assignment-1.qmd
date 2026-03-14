@@ -2,14 +2,116 @@
 title: "Assignment 1"
 ---
 
-# Assignment 1
+## a.)
+
+***Veri Bilimi ve Endüstri Mühendisliği Üzerine Sohbetler - Mustafa Baydoğan & Erdi Daşdemir***
+
+Bu videoda, Mustafa Baydoğan Hoca, kendi şirketi Algopoly'de karşılaştıkları gerçek
+problemlerden örnekler vererek sektör bazında bir mühendisin çözmesi gereken problemleri ve bu problemlerde veri madenciliği ve makina öğrenmesi gibi kavramların ne ölçüde karşımıza çıktığını bizlere aktarmaya çalıştı. Video boyunca bazıları kendi karşılaştığı problemler olmak üzere kereste, enerji, perakende gibi sektörlerden gerçek hayat problemlerini ve çözüm yollarını bize anlatarak anlatımını pekiştirdi ve bizlere gerçek hayat problemleri üzerinden sektörler arası bir bakış açısı sundu.
+
+## b.)
+
+**Açık Uçlu Soru:** Mustafa Baydoğan Hoca, ağaç işleri sektöründe çalışırken karşılaştığı problem üzerine bir endüstri mühendisinin bakış açısının bilgisayar mühendisliği ve diğer alanlardan nasıl ayrıştığını düşünmüştür ?
+
+**Cevap:** Problemin çözümünde ilgili bilgisayar mühendislerinin problemi sadece data olarak yorumlamasına karşın Mustafa Hoca problemi daha derinlikli bir şekilde araştırıp, hatta o alandan mezun olan kişilerle konuşup sebebini irdelemiştir.
+
+**Çoktan Seçmeli Soru:** Aşağıdakilerden hangisi geleneksel öğrenme
+
+yöntemlerinin bir avantajıdır?
+
+**- A)** Daha fazla parametre kullanması
+**- B)** Yapısal olmayan veriyle daha iyi çalışması
+**- C)** Yorumlanabilirlik ve gürbüzlük sağlaması
+**- D)** Öznitelik çıkarımını otomatik yapması
+
+**Cevap:** **C)** Yorumlanabilirlik ve gürbüzlük sağlaması
+
+## c.)
 
 ```{r}
-1 + 1
+# compute_stats fonksiyonunu tanımladım
+compute_stats <- function(x) {
+  list(
+    mean     = mean(x),
+    median   = median(x),
+    variance = var(x),
+    IQR      = IQR(x),
+    min      = min(x),
+    max      = max(x)
+  )
+}
+
+# for döngüsü ile her sütuna uyguladım
+for (col_name in names(mtcars)) {
+  
+  cat("column:", col_name, "\n")
+  
+  print(compute_stats(mtcars[[col_name]]))
+  
+}
 ```
 
-My first assignment has two parts.
+```{r}
+# sapply ile alternatif çözüm
+sapply_sonuc <- sapply(mtcars, compute_stats)
 
-## (a)
+print(sapply_sonuc)
 
-## (b)
+# apply ile alternatif çözüm
+mtcars_matrix <- as.matrix(mtcars)
+
+apply_sonuc <- apply(mtcars_matrix, 2, compute_stats)
+
+print(apply_sonuc)
+```
+
+## d.
+
+```{r}
+library(dslabs)
+
+my_first <- "Muhammed"
+my_birth_year <- 2002
+
+k <- (nchar(my_first) + my_birth_year) %% 15 + 8
+
+cat("k =", k, "\n")
+
+data("polls_us_election_2016")
+
+if (k %% 2 == 0) {
+  print(head(polls_us_election_2016, k))
+  
+} else {
+  print(tail(polls_us_election_2016, k))
+}
+```
+
+```{r}
+cat("toplam NA sayısı:", sum(is.na(polls_us_election_2016)), "\n")
+
+na_sutun <- sort(colSums(is.na(polls_us_election_2016)), decreasing = TRUE)
+print(head(na_sutun, 8))
+```
+
+```{r}
+new_data <- polls_us_election_2016
+
+for (col in names(new_data)) {
+  if (is.numeric(new_data[[col]])) {
+    new_data[[col]][is.na(new_data[[col]])] <- my_birth_year + k
+  } else {
+    new_data[[col]] <- as.character(new_data[[col]])
+    new_data[[col]][is.na(new_data[[col]])] <- paste0(my_first, "_", k)
+  }
+}
+
+if (k %% 2 == 0) {
+  print(head(new_data, k))
+} else {
+  print(tail(new_data, k))
+}
+
+cat("Kalan NA sayisi:", sum(is.na(new_data)), "\n")
+cat("anyNA(new_data):", anyNA(new_data), "\n")
+```
