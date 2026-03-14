@@ -1,0 +1,139 @@
+[
+  {
+    "objectID": "project.html",
+    "href": "project.html",
+    "title": "Project X",
+    "section": "",
+    "text": "Welcome to my/our project page.\nKeep an eye on this space to stay updated with my project activities.\n(The titles below are provided as examples; please feel free to adjust them as necessary.)"
+  },
+  {
+    "objectID": "project.html#data-source",
+    "href": "project.html#data-source",
+    "title": "Project X",
+    "section": "2.1 Data Source",
+    "text": "2.1 Data Source\nxxxxxx"
+  },
+  {
+    "objectID": "project.html#general-information-about-data",
+    "href": "project.html#general-information-about-data",
+    "title": "Project X",
+    "section": "2.2 General Information About Data",
+    "text": "2.2 General Information About Data\nxxxxxx"
+  },
+  {
+    "objectID": "project.html#reason-of-choice",
+    "href": "project.html#reason-of-choice",
+    "title": "Project X",
+    "section": "2.3 Reason of Choice",
+    "text": "2.3 Reason of Choice\nxxxxxx"
+  },
+  {
+    "objectID": "project.html#preprocessing",
+    "href": "project.html#preprocessing",
+    "title": "Project X",
+    "section": "2.4 Preprocessing",
+    "text": "2.4 Preprocessing\nxxxxxx"
+  },
+  {
+    "objectID": "project.html#exploratory-data-analysis",
+    "href": "project.html#exploratory-data-analysis",
+    "title": "Project X",
+    "section": "3.1 Exploratory Data Analysis",
+    "text": "3.1 Exploratory Data Analysis\nxxxxxx"
+  },
+  {
+    "objectID": "project.html#trend-analysis",
+    "href": "project.html#trend-analysis",
+    "title": "Project X",
+    "section": "3.2 Trend Analysis",
+    "text": "3.2 Trend Analysis\nxxxxxx"
+  },
+  {
+    "objectID": "project.html#model-fitting",
+    "href": "project.html#model-fitting",
+    "title": "Project X",
+    "section": "3.3 Model Fitting",
+    "text": "3.3 Model Fitting\nxxxxxx"
+  },
+  {
+    "objectID": "project.html#results",
+    "href": "project.html#results",
+    "title": "Project X",
+    "section": "3.4 Results",
+    "text": "3.4 Results\nxxxxxx"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome to My Analytics Lab",
+    "section": "",
+    "text": "Hello!! My name is Muhammed Reha Özdemir.\nThis is my personal webpage.\nPlease stay tuned to follow my works on data analytics, blog posts, and more.\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "posts.html",
+    "href": "posts.html",
+    "title": "My Blog",
+    "section": "",
+    "text": "This page is under construction.\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "My Assignments",
+    "section": "",
+    "text": "On this page, I showcase the assignment I conducted for the [term and year, e.g. Spring 2024-2025] EMU660 Decision Making with Analytics course.\nPlease use left menu to navigate through my assignments.\n\n\n\n Back to top",
+    "crumbs": [
+      "My Assignments"
+    ]
+  },
+  {
+    "objectID": "assignments/assignment-1.html",
+    "href": "assignments/assignment-1.html",
+    "title": "Assignment 1",
+    "section": "",
+    "text": "Veri Bilimi ve Endüstri Mühendisliği Üzerine Sohbetler - Mustafa Baydoğan & Erdi Daşdemir\nBu videoda, Mustafa Baydoğan Hoca, kendi şirketi Algopoly’de karşılaştıkları gerçek problemlerden örnekler vererek sektör bazında bir mühendisin çözmesi gereken problemleri ve bu problemlerde veri madenciliği ve makina öğrenmesi gibi kavramların ne ölçüde karşımıza çıktığını bizlere aktarmaya çalıştı. Video boyunca bazıları kendi karşılaştığı problemler olmak üzere kereste, enerji, perakende gibi sektörlerden gerçek hayat problemlerini ve çözüm yollarını bize anlatarak anlatımını pekiştirdi ve bizlere gerçek hayat problemleri üzerinden sektörler arası bir bakış açısı sundu.",
+    "crumbs": [
+      "Assignment 1"
+    ]
+  },
+  {
+    "objectID": "assignments/assignment-1.html#a.",
+    "href": "assignments/assignment-1.html#a.",
+    "title": "Assignment 1",
+    "section": "",
+    "text": "Veri Bilimi ve Endüstri Mühendisliği Üzerine Sohbetler - Mustafa Baydoğan & Erdi Daşdemir\nBu videoda, Mustafa Baydoğan Hoca, kendi şirketi Algopoly’de karşılaştıkları gerçek problemlerden örnekler vererek sektör bazında bir mühendisin çözmesi gereken problemleri ve bu problemlerde veri madenciliği ve makina öğrenmesi gibi kavramların ne ölçüde karşımıza çıktığını bizlere aktarmaya çalıştı. Video boyunca bazıları kendi karşılaştığı problemler olmak üzere kereste, enerji, perakende gibi sektörlerden gerçek hayat problemlerini ve çözüm yollarını bize anlatarak anlatımını pekiştirdi ve bizlere gerçek hayat problemleri üzerinden sektörler arası bir bakış açısı sundu.",
+    "crumbs": [
+      "Assignment 1"
+    ]
+  },
+  {
+    "objectID": "assignments/assignment-1.html#b.",
+    "href": "assignments/assignment-1.html#b.",
+    "title": "Assignment 1",
+    "section": "b.)",
+    "text": "b.)\nAçık Uçlu Soru: Mustafa Baydoğan Hoca, ağaç işleri sektöründe çalışırken karşılaştığı problem üzerine bir endüstri mühendisinin bakış açısının bilgisayar mühendisliği ve diğer alanlardan nasıl ayrıştığını düşünmüştür ?\nCevap: Problemin çözümünde ilgili bilgisayar mühendislerinin problemi sadece data olarak yorumlamasına karşın Mustafa Hoca problemi daha derinlikli bir şekilde araştırıp, hatta o alandan mezun olan kişilerle konuşup sebebini irdelemiştir.\nÇoktan Seçmeli Soru: Aşağıdakilerden hangisi geleneksel öğrenme\nyöntemlerinin bir avantajıdır?\n- A) Daha fazla parametre kullanması - B) Yapısal olmayan veriyle daha iyi çalışması - C) Yorumlanabilirlik ve gürbüzlük sağlaması - D) Öznitelik çıkarımını otomatik yapması\nCevap: C) Yorumlanabilirlik ve gürbüzlük sağlaması",
+    "crumbs": [
+      "Assignment 1"
+    ]
+  },
+  {
+    "objectID": "assignments/assignment-1.html#c.",
+    "href": "assignments/assignment-1.html#c.",
+    "title": "Assignment 1",
+    "section": "c.)",
+    "text": "c.)\n\n# compute_stats fonksiyonunu tanımladım\ncompute_stats &lt;- function(x) {\n  list(\n    mean     = mean(x),\n    median   = median(x),\n    variance = var(x),\n    IQR      = IQR(x),\n    min      = min(x),\n    max      = max(x)\n  )\n}\n\n# for döngüsü ile her sütuna uyguladım\nfor (col_name in names(mtcars)) {\n  \n  cat(\"column:\", col_name, \"\\n\")\n  \n  print(compute_stats(mtcars[[col_name]]))\n  \n}\n\ncolumn: mpg \n$mean\n[1] 20.09062\n\n$median\n[1] 19.2\n\n$variance\n[1] 36.3241\n\n$IQR\n[1] 7.375\n\n$min\n[1] 10.4\n\n$max\n[1] 33.9\n\ncolumn: cyl \n$mean\n[1] 6.1875\n\n$median\n[1] 6\n\n$variance\n[1] 3.189516\n\n$IQR\n[1] 4\n\n$min\n[1] 4\n\n$max\n[1] 8\n\ncolumn: disp \n$mean\n[1] 230.7219\n\n$median\n[1] 196.3\n\n$variance\n[1] 15360.8\n\n$IQR\n[1] 205.175\n\n$min\n[1] 71.1\n\n$max\n[1] 472\n\ncolumn: hp \n$mean\n[1] 146.6875\n\n$median\n[1] 123\n\n$variance\n[1] 4700.867\n\n$IQR\n[1] 83.5\n\n$min\n[1] 52\n\n$max\n[1] 335\n\ncolumn: drat \n$mean\n[1] 3.596563\n\n$median\n[1] 3.695\n\n$variance\n[1] 0.2858814\n\n$IQR\n[1] 0.84\n\n$min\n[1] 2.76\n\n$max\n[1] 4.93\n\ncolumn: wt \n$mean\n[1] 3.21725\n\n$median\n[1] 3.325\n\n$variance\n[1] 0.957379\n\n$IQR\n[1] 1.02875\n\n$min\n[1] 1.513\n\n$max\n[1] 5.424\n\ncolumn: qsec \n$mean\n[1] 17.84875\n\n$median\n[1] 17.71\n\n$variance\n[1] 3.193166\n\n$IQR\n[1] 2.0075\n\n$min\n[1] 14.5\n\n$max\n[1] 22.9\n\ncolumn: vs \n$mean\n[1] 0.4375\n\n$median\n[1] 0\n\n$variance\n[1] 0.2540323\n\n$IQR\n[1] 1\n\n$min\n[1] 0\n\n$max\n[1] 1\n\ncolumn: am \n$mean\n[1] 0.40625\n\n$median\n[1] 0\n\n$variance\n[1] 0.2489919\n\n$IQR\n[1] 1\n\n$min\n[1] 0\n\n$max\n[1] 1\n\ncolumn: gear \n$mean\n[1] 3.6875\n\n$median\n[1] 4\n\n$variance\n[1] 0.5443548\n\n$IQR\n[1] 1\n\n$min\n[1] 3\n\n$max\n[1] 5\n\ncolumn: carb \n$mean\n[1] 2.8125\n\n$median\n[1] 2\n\n$variance\n[1] 2.608871\n\n$IQR\n[1] 2\n\n$min\n[1] 1\n\n$max\n[1] 8\n\n\n\n# sapply ile alternatif çözüm\nsapply_sonuc &lt;- sapply(mtcars, compute_stats)\n\nprint(sapply_sonuc)\n\n         mpg      cyl      disp     hp       drat      wt       qsec    \nmean     20.09062 6.1875   230.7219 146.6875 3.596563  3.21725  17.84875\nmedian   19.2     6        196.3    123      3.695     3.325    17.71   \nvariance 36.3241  3.189516 15360.8  4700.867 0.2858814 0.957379 3.193166\nIQR      7.375    4        205.175  83.5     0.84      1.02875  2.0075  \nmin      10.4     4        71.1     52       2.76      1.513    14.5    \nmax      33.9     8        472      335      4.93      5.424    22.9    \n         vs        am        gear      carb    \nmean     0.4375    0.40625   3.6875    2.8125  \nmedian   0         0         4         2       \nvariance 0.2540323 0.2489919 0.5443548 2.608871\nIQR      1         1         1         2       \nmin      0         0         3         1       \nmax      1         1         5         8       \n\n# apply ile alternatif çözüm\nmtcars_matrix &lt;- as.matrix(mtcars)\n\napply_sonuc &lt;- apply(mtcars_matrix, 2, compute_stats)\n\nprint(apply_sonuc)\n\n$mpg\n$mpg$mean\n[1] 20.09062\n\n$mpg$median\n[1] 19.2\n\n$mpg$variance\n[1] 36.3241\n\n$mpg$IQR\n[1] 7.375\n\n$mpg$min\n[1] 10.4\n\n$mpg$max\n[1] 33.9\n\n\n$cyl\n$cyl$mean\n[1] 6.1875\n\n$cyl$median\n[1] 6\n\n$cyl$variance\n[1] 3.189516\n\n$cyl$IQR\n[1] 4\n\n$cyl$min\n[1] 4\n\n$cyl$max\n[1] 8\n\n\n$disp\n$disp$mean\n[1] 230.7219\n\n$disp$median\n[1] 196.3\n\n$disp$variance\n[1] 15360.8\n\n$disp$IQR\n[1] 205.175\n\n$disp$min\n[1] 71.1\n\n$disp$max\n[1] 472\n\n\n$hp\n$hp$mean\n[1] 146.6875\n\n$hp$median\n[1] 123\n\n$hp$variance\n[1] 4700.867\n\n$hp$IQR\n[1] 83.5\n\n$hp$min\n[1] 52\n\n$hp$max\n[1] 335\n\n\n$drat\n$drat$mean\n[1] 3.596563\n\n$drat$median\n[1] 3.695\n\n$drat$variance\n[1] 0.2858814\n\n$drat$IQR\n[1] 0.84\n\n$drat$min\n[1] 2.76\n\n$drat$max\n[1] 4.93\n\n\n$wt\n$wt$mean\n[1] 3.21725\n\n$wt$median\n[1] 3.325\n\n$wt$variance\n[1] 0.957379\n\n$wt$IQR\n[1] 1.02875\n\n$wt$min\n[1] 1.513\n\n$wt$max\n[1] 5.424\n\n\n$qsec\n$qsec$mean\n[1] 17.84875\n\n$qsec$median\n[1] 17.71\n\n$qsec$variance\n[1] 3.193166\n\n$qsec$IQR\n[1] 2.0075\n\n$qsec$min\n[1] 14.5\n\n$qsec$max\n[1] 22.9\n\n\n$vs\n$vs$mean\n[1] 0.4375\n\n$vs$median\n[1] 0\n\n$vs$variance\n[1] 0.2540323\n\n$vs$IQR\n[1] 1\n\n$vs$min\n[1] 0\n\n$vs$max\n[1] 1\n\n\n$am\n$am$mean\n[1] 0.40625\n\n$am$median\n[1] 0\n\n$am$variance\n[1] 0.2489919\n\n$am$IQR\n[1] 1\n\n$am$min\n[1] 0\n\n$am$max\n[1] 1\n\n\n$gear\n$gear$mean\n[1] 3.6875\n\n$gear$median\n[1] 4\n\n$gear$variance\n[1] 0.5443548\n\n$gear$IQR\n[1] 1\n\n$gear$min\n[1] 3\n\n$gear$max\n[1] 5\n\n\n$carb\n$carb$mean\n[1] 2.8125\n\n$carb$median\n[1] 2\n\n$carb$variance\n[1] 2.608871\n\n$carb$IQR\n[1] 2\n\n$carb$min\n[1] 1\n\n$carb$max\n[1] 8",
+    "crumbs": [
+      "Assignment 1"
+    ]
+  },
+  {
+    "objectID": "assignments/assignment-1.html#d.",
+    "href": "assignments/assignment-1.html#d.",
+    "title": "Assignment 1",
+    "section": "d.",
+    "text": "d.\n\nlibrary(dslabs)\n\nmy_first &lt;- \"Muhammed\"\nmy_birth_year &lt;- 2002\n\nk &lt;- (nchar(my_first) + my_birth_year) %% 15 + 8\n\ncat(\"k =\", k, \"\\n\")\n\nk = 8 \n\ndata(\"polls_us_election_2016\")\n\nif (k %% 2 == 0) {\n  print(head(polls_us_election_2016, k))\n  \n} else {\n  print(tail(polls_us_election_2016, k))\n}\n\n  state  startdate    enddate\n1  U.S. 2016-11-03 2016-11-06\n2  U.S. 2016-11-01 2016-11-07\n3  U.S. 2016-11-02 2016-11-06\n4  U.S. 2016-11-04 2016-11-07\n5  U.S. 2016-11-03 2016-11-06\n6  U.S. 2016-11-03 2016-11-06\n7  U.S. 2016-11-02 2016-11-06\n8  U.S. 2016-11-03 2016-11-05\n                                                    pollster grade samplesize\n1                                   ABC News/Washington Post    A+       2220\n2                                    Google Consumer Surveys     B      26574\n3                                                      Ipsos    A-       2195\n4                                                     YouGov     B       3677\n5                                           Gravis Marketing    B-      16639\n6 Fox News/Anderson Robbins Research/Shaw & Company Research     A       1295\n7                                    CBS News/New York Times    A-       1426\n8                               NBC News/Wall Street Journal    A-       1282\n  population rawpoll_clinton rawpoll_trump rawpoll_johnson rawpoll_mcmullin\n1         lv           47.00         43.00            4.00               NA\n2         lv           38.03         35.69            5.46               NA\n3         lv           42.00         39.00            6.00               NA\n4         lv           45.00         41.00            5.00               NA\n5         rv           47.00         43.00            3.00               NA\n6         lv           48.00         44.00            3.00               NA\n7         lv           45.00         41.00            5.00               NA\n8         lv           44.00         40.00            6.00               NA\n  adjpoll_clinton adjpoll_trump adjpoll_johnson adjpoll_mcmullin\n1        45.20163      41.72430        4.626221               NA\n2        43.34557      41.21439        5.175792               NA\n3        42.02638      38.81620        6.844734               NA\n4        45.65676      40.92004        6.069454               NA\n5        46.84089      42.33184        3.726098               NA\n6        49.02208      43.95631        3.057876               NA\n7        45.11649      40.92722        4.341786               NA\n8        43.58576      40.77325        5.365788               NA\n\n\n\ncat(\"toplam NA sayısı:\", sum(is.na(polls_us_election_2016)), \"\\n\")\n\ntoplam NA sayısı: 11604 \n\nna_sutun &lt;- sort(colSums(is.na(polls_us_election_2016)), decreasing = TRUE)\nprint(head(na_sutun, 8))\n\nrawpoll_mcmullin adjpoll_mcmullin  rawpoll_johnson  adjpoll_johnson \n            4178             4178             1409             1409 \n           grade       samplesize            state        startdate \n             429                1                0                0 \n\n\n\nnew_data &lt;- polls_us_election_2016\n\nfor (col in names(new_data)) {\n  if (is.numeric(new_data[[col]])) {\n    new_data[[col]][is.na(new_data[[col]])] &lt;- my_birth_year + k\n  } else {\n    new_data[[col]] &lt;- as.character(new_data[[col]])\n    new_data[[col]][is.na(new_data[[col]])] &lt;- paste0(my_first, \"_\", k)\n  }\n}\n\nif (k %% 2 == 0) {\n  print(head(new_data, k))\n} else {\n  print(tail(new_data, k))\n}\n\n  state  startdate    enddate\n1  U.S. 2016-11-03 2016-11-06\n2  U.S. 2016-11-01 2016-11-07\n3  U.S. 2016-11-02 2016-11-06\n4  U.S. 2016-11-04 2016-11-07\n5  U.S. 2016-11-03 2016-11-06\n6  U.S. 2016-11-03 2016-11-06\n7  U.S. 2016-11-02 2016-11-06\n8  U.S. 2016-11-03 2016-11-05\n                                                    pollster grade samplesize\n1                                   ABC News/Washington Post    A+       2220\n2                                    Google Consumer Surveys     B      26574\n3                                                      Ipsos    A-       2195\n4                                                     YouGov     B       3677\n5                                           Gravis Marketing    B-      16639\n6 Fox News/Anderson Robbins Research/Shaw & Company Research     A       1295\n7                                    CBS News/New York Times    A-       1426\n8                               NBC News/Wall Street Journal    A-       1282\n  population rawpoll_clinton rawpoll_trump rawpoll_johnson rawpoll_mcmullin\n1         lv           47.00         43.00            4.00             2010\n2         lv           38.03         35.69            5.46             2010\n3         lv           42.00         39.00            6.00             2010\n4         lv           45.00         41.00            5.00             2010\n5         rv           47.00         43.00            3.00             2010\n6         lv           48.00         44.00            3.00             2010\n7         lv           45.00         41.00            5.00             2010\n8         lv           44.00         40.00            6.00             2010\n  adjpoll_clinton adjpoll_trump adjpoll_johnson adjpoll_mcmullin\n1        45.20163      41.72430        4.626221             2010\n2        43.34557      41.21439        5.175792             2010\n3        42.02638      38.81620        6.844734             2010\n4        45.65676      40.92004        6.069454             2010\n5        46.84089      42.33184        3.726098             2010\n6        49.02208      43.95631        3.057876             2010\n7        45.11649      40.92722        4.341786             2010\n8        43.58576      40.77325        5.365788             2010\n\ncat(\"Kalan NA sayisi:\", sum(is.na(new_data)), \"\\n\")\n\nKalan NA sayisi: 0 \n\ncat(\"anyNA(new_data):\", anyNA(new_data), \"\\n\")\n\nanyNA(new_data): FALSE",
+    "crumbs": [
+      "Assignment 1"
+    ]
+  }
+]
