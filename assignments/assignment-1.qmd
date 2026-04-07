@@ -6,8 +6,7 @@ title: "Assignment 1"
 
 ***Veri Bilimi ve Endüstri Mühendisliği Üzerine Sohbetler - Mustafa Baydoğan & Erdi Daşdemir***
 
-Bu videoda, Mustafa Baydoğan Hoca, kendi şirketi Algopoly'de karşılaştıkları gerçek
-problemlerden örnekler vererek sektör bazında bir mühendisin çözmesi gereken problemleri ve bu problemlerde veri madenciliği ve makina öğrenmesi gibi kavramların ne ölçüde karşımıza çıktığını bizlere aktarmaya çalıştı. Video boyunca bazıları kendi karşılaştığı problemler olmak üzere kereste, enerji, perakende gibi sektörlerden gerçek hayat problemlerini ve çözüm yollarını bize anlatarak anlatımını pekiştirdi ve bizlere gerçek hayat problemleri üzerinden sektörler arası bir bakış açısı sundu.
+Bu videoda, Mustafa Baydoğan Hoca, kendi şirketi Algopoly'de karşılaştıkları gerçek problemlerden örnekler vererek sektör bazında bir mühendisin çözmesi gereken problemleri ve bu problemlerde veri madenciliği ve makina öğrenmesi gibi kavramların ne ölçüde karşımıza çıktığını bizlere aktarmaya çalıştı. Video boyunca bazıları kendi karşılaştığı problemler olmak üzere kereste, enerji, perakende gibi sektörlerden gerçek hayat problemlerini ve çözüm yollarını bize anlatarak anlatımını pekiştirdi ve bizlere gerçek hayat problemleri üzerinden sektörler arası bir bakış açısı sundu.
 
 ## b.)
 
@@ -19,10 +18,7 @@ problemlerden örnekler vererek sektör bazında bir mühendisin çözmesi gerek
 
 yöntemlerinin bir avantajıdır?
 
-**- A)** Daha fazla parametre kullanması
-**- B)** Yapısal olmayan veriyle daha iyi çalışması
-**- C)** Yorumlanabilirlik ve gürbüzlük sağlaması
-**- D)** Öznitelik çıkarımını otomatik yapması
+**- A)** Daha fazla parametre kullanması **- B)** Yapısal olmayan veriyle daha iyi çalışması **- C)** Yorumlanabilirlik ve gürbüzlük sağlaması **- D)** Öznitelik çıkarımını otomatik yapması
 
 **Cevap:** **C)** Yorumlanabilirlik ve gürbüzlük sağlaması
 
