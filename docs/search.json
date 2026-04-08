@@ -2,63 +2,63 @@
   {
     "objectID": "project.html",
     "href": "project.html",
-    "title": "Project X",
+    "title": "Trends in University Department Preferences in Turkey",
     "section": "",
     "text": "Welcome to my/our project page.\nKeep an eye on this space to stay updated with my project activities.\n(The titles below are provided as examples; please feel free to adjust them as necessary.)"
   },
   {
     "objectID": "project.html#data-source",
     "href": "project.html#data-source",
-    "title": "Project X",
+    "title": "Trends in University Department Preferences in Turkey",
     "section": "2.1 Data Source",
-    "text": "2.1 Data Source\nxxxxxx"
+    "text": "2.1 Data Source\nThe data is obtained from the `thestats` package in R, which scrapes data from the YÖK Atlas portal maintained by the Turkish Higher Education Council (YÖK). YÖK Atlas provides detailed statistics on university programs, student preferences, and placement results across Turkey."
   },
   {
     "objectID": "project.html#general-information-about-data",
     "href": "project.html#general-information-about-data",
-    "title": "Project X",
+    "title": "Trends in University Department Preferences in Turkey",
     "section": "2.2 General Information About Data",
-    "text": "2.2 General Information About Data\nxxxxxx"
+    "text": "2.2 General Information About Data\nThe dataset contains 25,652 rows and 198 variables. For this project, 10 key variables were selected:\n\nyear: Year the data was announced (2018, 2019, 2020)\ntype: Type of university (State or Private)\nuniversity: Name of the university\ndepartment: Name of the department/program\nscore_type: Entrance exam score type (SAY, EA, SÖZ, DİL)\nquota: General quota of the program\nplaced: Number of students placed\nlowest_score: Lowest placement score\nhighest_score: Highest placement score\nnum_choices: Number of students who chose this program"
   },
   {
     "objectID": "project.html#reason-of-choice",
     "href": "project.html#reason-of-choice",
-    "title": "Project X",
+    "title": "Trends in University Department Preferences in Turkey",
     "section": "2.3 Reason of Choice",
-    "text": "2.3 Reason of Choice\nxxxxxx"
+    "text": "2.3 Reason of Choice\nThis dataset was selected for the following reasons:\n\nIt is directly accessible via R without any manual downloading or web scraping\nIt covers all universities and departments in Turkey, making it representative at the national level\nIt enables trend analysis across years and comparison across university types and score categories\nThe topic has direct relevance to Turkey’s higher education policy and planning"
   },
   {
     "objectID": "project.html#preprocessing",
     "href": "project.html#preprocessing",
-    "title": "Project X",
+    "title": "Trends in University Department Preferences in Turkey",
     "section": "2.4 Preprocessing",
-    "text": "2.4 Preprocessing\nxxxxxx"
+    "text": "2.4 Preprocessing\nThe raw scores dataset from the thestats package contains 198 variables. For this project, 10 key variables were selected and renamed for clarity using the dplyr package. The preprocessing code is as follows:\n\n\nShow the code\nlibrary(thestats)\n\n\nWarning: package 'thestats' was built under R version 4.5.3\n\n\nZorunlu paket yükleniyor: dplyr\n\n\nWarning: package 'dplyr' was built under R version 4.5.3\n\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\n\nShow the code\nlibrary(dplyr)\n\ndata(scores)\n\ndf &lt;- scores |&gt;\n  select(year, type, university, department,\n         X6, X9, X11, X14, X16, X139) |&gt;\n  rename(\n    score_type = X6,\n    quota = X9,\n    placed = X11,\n    lowest_score = X14,\n    highest_score = X16,\n    num_choices = X139\n  )\n\nsave(df, file = \"data.RData\")\n\n\nThe processed dataset is stored in .RData format and can be accessed here."
   },
   {
     "objectID": "project.html#exploratory-data-analysis",
     "href": "project.html#exploratory-data-analysis",
-    "title": "Project X",
+    "title": "Trends in University Department Preferences in Turkey",
     "section": "3.1 Exploratory Data Analysis",
     "text": "3.1 Exploratory Data Analysis\nxxxxxx"
   },
   {
     "objectID": "project.html#trend-analysis",
     "href": "project.html#trend-analysis",
-    "title": "Project X",
+    "title": "Trends in University Department Preferences in Turkey",
     "section": "3.2 Trend Analysis",
     "text": "3.2 Trend Analysis\nxxxxxx"
   },
   {
     "objectID": "project.html#model-fitting",
     "href": "project.html#model-fitting",
-    "title": "Project X",
+    "title": "Trends in University Department Preferences in Turkey",
     "section": "3.3 Model Fitting",
     "text": "3.3 Model Fitting\nxxxxxx"
   },
   {
     "objectID": "project.html#results",
     "href": "project.html#results",
-    "title": "Project X",
+    "title": "Trends in University Department Preferences in Turkey",
     "section": "3.4 Results",
     "text": "3.4 Results\nxxxxxx"
   },

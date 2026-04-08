@@ -1,5 +1,5 @@
 ---
-title: "Project X"
+title: "Trends in University Department Preferences in Turkey"
 ---
 
 Welcome to my/our project page.
@@ -10,27 +10,89 @@ Keep an eye on this space to stay updated with my project activities.
 
 # 1. Project Overview and Scope
 
-xxxxxx
+This project analyzes trends in university department preferences in Turkey using data from the YÖK Atlas platform. The main research question is:
+
+"Which university departments are gaining or losing popularity in Turkey between 2018 and 2020, and what factors — such as university type, score type, and quota size — are associated with these changes?"
+
+The objectives of this project are:
+
+- To identify which departments are trending up or down in terms of
+student demand between 2018 and 2020
+- To examine how demand patterns differ across university type
+(state vs. private) and score type (SAY, EA, SÖZ, DİL)
+- To analyze the relationship between quota size, placement rates,
+and student preferences
+- To provide data-driven insights for university planning and
+higher education policy decisions
 
 # 2. Data
 
-xxxxxx
+This project uses the \`scores\` dataset from the \`thestats\` R package,
+which provides data scraped from the YÖK Atlas portal. The dataset covers 25,652 university
+programs across 198 universities in Turkey for the years 2018, 2019, and 2020.
 
 ## 2.1 Data Source
 
-xxxxxx
+The data is obtained from the \`thestats\` package in R, which scrapes data
+from the YÖK Atlas portal maintained by the Turkish Higher Education Council (YÖK).
+YÖK Atlas provides detailed statistics on university programs, student preferences,
+and placement results across Turkey.
 
 ## 2.2 General Information About Data
 
-xxxxxx
+The dataset contains 25,652 rows and 198 variables. For this project, 10 key variables were selected:
+
+-   `year`: Year the data was announced (2018, 2019, 2020)
+-   `type`: Type of university (State or Private)
+-   `university`: Name of the university
+-   `department`: Name of the department/program
+-   `score_type`: Entrance exam score type (SAY, EA, SÖZ, DİL)
+-   `quota`: General quota of the program
+-   `placed`: Number of students placed
+-   `lowest_score`: Lowest placement score
+-   `highest_score`: Highest placement score
+-   `num_choices`: Number of students who chose this program
 
 ## 2.3 Reason of Choice
 
-xxxxxx
+This dataset was selected for the following reasons:
+
+- It is directly accessible via R without any manual downloading or web scraping
+- It covers all universities and departments in Turkey, making it representative
+at the national level
+- It enables trend analysis across years and comparison across university types
+and score categories
+- The topic has direct relevance to Turkey's higher education policy and planning
 
 ## 2.4 Preprocessing
 
-xxxxxx
+The raw `scores` dataset from the `thestats` package contains 198 variables. For this project, 10 key variables were selected and renamed for clarity using the `dplyr` package. The preprocessing code is as follows:
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+
+library(thestats)
+library(dplyr)
+
+data(scores)
+
+df <- scores |>
+  select(year, type, university, department,
+         X6, X9, X11, X14, X16, X139) |>
+  rename(
+    score_type = X6,
+    quota = X9,
+    placed = X11,
+    lowest_score = X14,
+    highest_score = X16,
+    num_choices = X139
+  )
+
+save(df, file = "data.RData")
+```
+
+The processed dataset is stored in `.RData` format and can be accessed [here](data.RData).
 
 # 3. Analysis
 
