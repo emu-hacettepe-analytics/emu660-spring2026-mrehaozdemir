@@ -1,5 +1,6 @@
 ---
 title: "Trends in University Department Preferences in Turkey"
+authors: "Muhammed Reha Özdemir and Yeşim Kaya"
 ---
 
 Welcome to my/our project page.
@@ -16,27 +17,18 @@ This project analyzes trends in university department preferences in Turkey usin
 
 The objectives of this project are:
 
-- To identify which departments are trending up or down in terms of
-student demand between 2018 and 2020
-- To examine how demand patterns differ across university type
-(state vs. private) and score type (SAY, EA, SÖZ, DİL)
-- To analyze the relationship between quota size, placement rates,
-and student preferences
-- To provide data-driven insights for university planning and
-higher education policy decisions
+-   To identify which departments are trending up or down in terms of student demand between 2018 and 2020
+-   To examine how demand patterns differ across university type (state vs. private) and score type (SAY, EA, SÖZ, DİL)
+-   To analyze the relationship between quota size, placement rates, and student preferences
+-   To provide data-driven insights for university planning and higher education policy decisions
 
 # 2. Data
 
-This project uses the \`scores\` dataset from the \`thestats\` R package,
-which provides data scraped from the YÖK Atlas portal. The dataset covers 25,652 university
-programs across 198 universities in Turkey for the years 2018, 2019, and 2020.
+This project uses the \`scores\` dataset from the \`thestats\` R package, which provides data scraped from the YÖK Atlas portal. The dataset covers 25,652 university programs across 198 universities in Turkey for the years 2018, 2019, and 2020.
 
 ## 2.1 Data Source
 
-The data is obtained from the \`thestats\` package in R, which scrapes data
-from the YÖK Atlas portal maintained by the Turkish Higher Education Council (YÖK).
-YÖK Atlas provides detailed statistics on university programs, student preferences,
-and placement results across Turkey.
+The data is obtained from the \`thestats\` package in R, which scrapes data from the YÖK Atlas portal maintained by the Turkish Higher Education Council (YÖK). YÖK Atlas provides detailed statistics on university programs, student preferences, and placement results across Turkey.
 
 ## 2.2 General Information About Data
 
@@ -57,12 +49,10 @@ The dataset contains 25,652 rows and 198 variables. For this project, 10 key var
 
 This dataset was selected for the following reasons:
 
-- It is directly accessible via R without any manual downloading or web scraping
-- It covers all universities and departments in Turkey, making it representative
-at the national level
-- It enables trend analysis across years and comparison across university types
-and score categories
-- The topic has direct relevance to Turkey's higher education policy and planning
+-   It is directly accessible via R without any manual downloading or web scraping
+-   It covers all universities and departments in Turkey, making it representative at the national level
+-   It enables trend analysis across years and comparison across university types and score categories
+-   The topic has direct relevance to Turkey's higher education policy and planning
 
 ## 2.4 Preprocessing
 
