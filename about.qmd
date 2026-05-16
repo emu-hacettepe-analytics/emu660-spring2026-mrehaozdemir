@@ -5,7 +5,7 @@ sidebar: false
 
 ![](assets/images/vesikalik.jpeg){fig-align="center" width="400"}
 
-[CV İndir](files/cv.pdf)
+[CV D0ndir](files/cv.pdf)
 
 # Education
 
@@ -19,7 +19,7 @@ sidebar: false
 
 ## Internships
 
--   BEST Transformer A.Ş., position Engineering Intern, year 2025
+-   BEST Transformer A.E., position Engineering Intern, year 2025
 
 # Projects
 
