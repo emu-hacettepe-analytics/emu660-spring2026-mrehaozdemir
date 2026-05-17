@@ -14,6 +14,9 @@ format:
     margin-right: 2cm
     margin-top: 2cm
     margin-bottom: 2cm
+    
+execute:
+  echo: false
 ---
 
 ```{r}
@@ -55,14 +58,19 @@ Since the three sources use slightly different column names and encoding convent
 #| label: load-data
 #| code-fold: true
 #| code-summary: "Data loading and preprocessing code"
-#| message: false
-#| results: hide
 
+# Read the combined dataset
 df <- fread("yokatlas_FINAL_CLEAN.csv", encoding = "UTF-8")
+
+# Convert to tibble for tidyverse compatibility
 df <- as_tibble(df)
+
+# Quick structure check
 cat("Dataset dimensions:", nrow(df), "rows x", ncol(df), "columns\n")
 cat("Years covered:", paste(sort(unique(df$year)), collapse = ", "), "\n")
 cat("Categories:", paste(sort(unique(df$kategori)), collapse = ", "), "\n")
+
+# Save as .RData for reproducibility
 save(df, file = "data.RData")
 ```
 
@@ -88,8 +96,8 @@ The dataset contains the following key columns:
 #| label: data-overview
 #| code-fold: true
 #| code-summary: "Data overview"
-#| results: hide
 
+# Programs per year
 df |>
   group_by(year) |>
   summarise(n_programs = n(),
@@ -97,6 +105,7 @@ df |>
             avg_sira = round(mean(sira, na.rm = TRUE), 0)) |>
   print()
 
+# Programs per category
 df |>
   filter(kategori != "Diger") |>
   group_by(kategori) |>
@@ -117,8 +126,8 @@ The dataset covers eight academic years and contains records from all seven fiel
 #| code-fold: true
 #| code-summary: "Score distribution by category"
 #| fig-cap: "Minimum admission score distribution across field categories in 2024."
-#| fig-width: 8
-#| fig-height: 4
+#| fig-width: 10
+#| fig-height: 6
 
 df |>
   filter(kategori != "Diger", year == 2024) |>
@@ -136,7 +145,6 @@ As shown in @fig-eda-distribution, the 2024 score distributions show considerabl
 #| label: eda-missing
 #| code-fold: true
 #| code-summary: "Missing data summary"
-#| results: hide
 
 df |>
   summarise(
@@ -157,9 +165,10 @@ Missing values are present mainly in the `yerlesen` (enrolled students) and `sir
 #| code-fold: true
 #| code-summary: "Average score trend by category"
 #| fig-cap: "Average minimum admission score by field category from 2018 to 2025."
-#| fig-width: 8
-#| fig-height: 4
+#| fig-width: 11
+#| fig-height: 6
 
+# Average minimum score by category over years
 category_trend <- df |>
   filter(kategori != "Diger") |>
   group_by(year, kategori) |>
@@ -181,9 +190,10 @@ As shown in @fig-category-trend-puan, the most striking feature of this chart is
 #| code-fold: true
 #| code-summary: "Number of programs by category"
 #| fig-cap: "Number of programs per field category from 2018 to 2025."
-#| fig-width: 8
-#| fig-height: 4
+#| fig-width: 11
+#| fig-height: 6
 
+# Program count trend
 program_count <- df |>
   filter(kategori != "Diger") |>
   group_by(year, kategori) |>
@@ -207,9 +217,10 @@ As shown in @fig-category-trend-count, engineering dominates the program count c
 #| code-fold: true
 #| code-summary: "Engineering sub-field score trends"
 #| fig-cap: "Average minimum admission score trend for the top 6 engineering sub-fields."
-#| fig-width: 8
-#| fig-height: 4
+#| fig-width: 11
+#| fig-height: 7
 
+# Top 6 engineering sub-fields by program count
 top_eng <- df |>
   filter(kategori == "Muhendislik",
          bolum_grubu != "Diger Muhendislik") |>
@@ -219,6 +230,7 @@ top_eng <- df |>
   head(6) |>
   pull(bolum_grubu)
 
+# Score trend for top sub-fields
 eng_trend <- df |>
   filter(bolum_grubu %in% top_eng) |>
   group_by(year, bolum_grubu) |>
@@ -240,8 +252,8 @@ As shown in @fig-eng-subfield-trend, among the six sub-fields, computer engineer
 #| code-fold: true
 #| code-summary: "State vs Private engineering programs"
 #| fig-cap: "Minimum admission score distribution for state and private engineering programs in 2024."
-#| fig-width: 7
-#| fig-height: 3.5
+#| fig-width: 10
+#| fig-height: 6
 
 df |>
   filter(kategori == "Muhendislik",
@@ -264,8 +276,8 @@ As shown in @fig-eng-state-private, contrary to what might be expected, the scor
 #| code-fold: true
 #| code-summary: "Top 10 cities by number of programs"
 #| fig-cap: "Top 10 cities in Turkey by number of university programs in 2024."
-#| fig-width: 7
-#| fig-height: 3.5
+#| fig-width: 10
+#| fig-height: 6
 
 top_cities <- df |>
   filter(!is.na(il), il != "", year == 2024, kategori != "Diger") |>
@@ -292,17 +304,23 @@ As shown in @fig-regional-top-cities, Istanbul leads by a very large margin with
 #| code-fold: true
 #| code-summary: "Linear trend model for Computer Engineering"
 #| fig-cap: "Linear trend model fitted to computer engineering average admission scores, with prediction for 2026."
-#| fig-width: 7
-#| fig-height: 3.5
-#| message: false
+#| fig-width: 10
+#| fig-height: 6
 
+# Simple linear model for Bilgisayar Muh.
 bilgisayar <- df |>
   filter(bolum_grubu == "Bilgisayar Muh.") |>
   group_by(year) |>
   summarise(avg_puan = mean(puan, na.rm = TRUE))
 
 model <- lm(avg_puan ~ year, data = bilgisayar)
+cat("Linear model summary:\n")
+cat("  Coefficient (yearly change):", round(coef(model)[2], 2), "\n")
+cat("  R-squared:", round(summary(model)$r.squared, 3), "\n")
+
+# Predict 2026
 pred_2026 <- predict(model, newdata = data.frame(year = 2026))
+cat("  Predicted 2026 avg score:", round(pred_2026, 1), "\n")
 
 ggplot(bilgisayar, aes(x = year, y = avg_puan)) +
   geom_point(size = 3, color = "#2E86AB") +
