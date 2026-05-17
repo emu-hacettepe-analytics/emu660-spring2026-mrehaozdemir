@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -382,15 +417,15 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="preprocessing">2.2 Preprocessing</h2>
 <p>Since the three sources use slightly different column names and encoding conventions, we merged them into a single table and standardized department names by matching Turkish and English variants. University type labels (<code>unitur</code>) were also unified, and a <code>bolum_grubu</code> column was added to group programs into broader sub-field categories for easier comparison.</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>Dataset dimensions: 75145 rows x 11 columns</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Years covered: 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Categories: Diger, Dis_Hekimligi_Eczacilik, Hukuk, Mimarlik, Muhendislik, Ogretmenlik, Psikoloji, Tip </code></pre>
-</div>
+<details class="code-fold">
+<summary>Data loading and preprocessing code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">"yokatlas_FINAL_CLEAN.csv"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(df)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Dataset dimensions:"</span>, <span class="fu">nrow</span>(df), <span class="st">"rows x"</span>, <span class="fu">ncol</span>(df), <span class="st">"columns</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Years covered:"</span>, <span class="fu">paste</span>(<span class="fu">sort</span>(<span class="fu">unique</span>(df<span class="sc">$</span>year)), <span class="at">collapse =</span> <span class="st">", "</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Categories:"</span>, <span class="fu">paste</span>(<span class="fu">sort</span>(<span class="fu">unique</span>(df<span class="sc">$</span>kategori)), <span class="at">collapse =</span> <span class="st">", "</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(df, <span class="at">file =</span> <span class="st">"data.RData"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <p>The processed dataset is stored in <code>.RData</code> format and can be accessed <a href="data.RData">here</a>.</p>
 </section>
@@ -444,31 +479,23 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 8 × 4
-   year n_programs avg_puan avg_sira
-  &lt;int&gt;      &lt;int&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1  2018       5935     323.   198128
-2  2019       6764     324.   239592
-3  2020       9571     318.   312161
-4  2021      18357     175    329515
-5  2022       8354     284    359386
-6  2023       8927     272.   382464
-7  2024       9640     243.   391498
-8  2025       7597     334.   336911</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 3
-  kategori                n_programs avg_puan
-  &lt;chr&gt;                        &lt;int&gt;    &lt;dbl&gt;
-1 Tip                           1323     433.
-2 Dis_Hekimligi_Eczacilik       1673     396.
-3 Hukuk                         1178     350.
-4 Ogretmenlik                   4204     323.
-5 Psikoloji                     2801     306.
-6 Muhendislik                  13495     291.
-7 Mimarlik                      3106     266.</code></pre>
-</div>
+<details class="code-fold">
+<summary>Data overview</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_programs =</span> <span class="fu">n</span>(),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">avg_puan =</span> <span class="fu">round</span>(<span class="fu">mean</span>(puan, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">avg_sira =</span> <span class="fu">round</span>(<span class="fu">mean</span>(sira, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(kategori <span class="sc">!=</span> <span class="st">"Diger"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(kategori) <span class="sc">|&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_programs =</span> <span class="fu">n</span>(),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">avg_puan =</span> <span class="fu">round</span>(<span class="fu">mean</span>(puan, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg_puan)) <span class="sc">|&gt;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <p>The dataset covers eight academic years and contains records from all seven field categories. Medicine has the highest average admission score at 433, followed by dentistry/pharmacy at 396, while architecture sits at the bottom with 266. Engineering, despite having the largest number of programs by far — over 13,000 records across all years — averages around 291, which reflects the wide range of programs it includes. The 2021 row shows an unusually high program count of 18,357, which is likely an artifact of how the third-party data source for that year was structured rather than a real spike in offerings.</p>
 </section>
@@ -478,11 +505,22 @@ ul.task-list li input[type="checkbox"] {
 <section id="exploratory-data-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="exploratory-data-analysis">3.1 Exploratory Data Analysis</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Score distribution by category</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(kategori <span class="sc">!=</span> <span class="st">"Diger"</span>, year <span class="sc">==</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> kategori, <span class="at">y =</span> puan, <span class="at">fill =</span> kategori)) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Score Distribution by Category (2024)"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Minimum Admission Score"</span>) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">25</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-eda-distribution" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-eda-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="project_files/figure-html/fig-eda-distribution-1.png" class="img-fluid figure-img" width="960">
+<img src="project_files/figure-html/fig-eda-distribution-1.png" class="img-fluid figure-img" width="768">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eda-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Minimum admission score distribution across field categories in 2024.
@@ -493,23 +531,43 @@ Figure&nbsp;1: Minimum admission score distribution across field categories in 2
 </div>
 <p>As shown in <a href="#fig-eda-distribution" class="quarto-xref">Figure&nbsp;1</a>, the 2024 score distributions show considerable variation both across and within categories. Medicine and dentistry/pharmacy have the highest and most compact distributions, meaning most programs in these fields require similarly high scores. Law and engineering show wider spreads, with engineering in particular covering a very broad range — from around 0 to well above 400 — which points to the coexistence of very selective programs and much lower-threshold ones within the same category. Psychology’s interquartile range sits mostly between 250 and 375, with a few outliers near zero that are likely low-quota private programs.</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 4
-  kontenjan_na yerlesen_na puan_na sira_na
-         &lt;int&gt;       &lt;int&gt;   &lt;int&gt;   &lt;int&gt;
-1        28148        4452       0    5357</code></pre>
-</div>
+<details class="code-fold">
+<summary>Missing data summary</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">kontenjan_na =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(kontenjan)),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">yerlesen_na  =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(yerlesen)),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">puan_na      =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(puan)),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sira_na      =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(sira))</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
 <p>Missing values are present mainly in the <code>yerlesen</code> (enrolled students) and <code>sira</code> (rank) columns, which is expected since not all programs fill their quotas every year and rank data is not always published for very low-scoring entries. The <code>puan</code> column, which is the primary variable used throughout the analysis, has a relatively small number of missing entries and these were excluded from calculations using <code>na.rm = TRUE</code>.</p>
 </section>
 <section id="category-trend-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="category-trend-analysis">3.2 Category Trend Analysis</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Average score trend by category</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>category_trend <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(kategori <span class="sc">!=</span> <span class="st">"Diger"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, kategori) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_puan =</span> <span class="fu">mean</span>(puan, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(category_trend, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> avg_puan, <span class="at">color =</span> kategori)) <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">2018</span><span class="sc">:</span><span class="dv">2025</span>) <span class="sc">+</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average Minimum Admission Score by Category (2018-2025)"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Average Min Score"</span>, <span class="at">color =</span> <span class="st">"Category"</span>) <span class="sc">+</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-category-trend-puan" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-category-trend-puan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="project_files/figure-html/fig-category-trend-puan-1.png" class="img-fluid figure-img" width="1056">
+<img src="project_files/figure-html/fig-category-trend-puan-1.png" class="img-fluid figure-img" width="768">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-category-trend-puan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Average minimum admission score by field category from 2018 to 2025.
@@ -520,11 +578,26 @@ Figure&nbsp;2: Average minimum admission score by field category from 2018 to 20
 </div>
 <p>As shown in <a href="#fig-category-trend-puan" class="quarto-xref">Figure&nbsp;2</a>, the most striking feature of this chart is the sharp drop across all categories in 2021, followed by a partial recovery in 2022. This pattern is consistent with a data source change for 2021 rather than a real-year effect, and should be interpreted with caution. Setting that aside, medicine and dentistry/pharmacy have maintained the highest scores throughout the period and both show an upward push toward 2025. Law recovered strongly after 2022 and is trending upward. Engineering and architecture have remained relatively flat, while psychology and teaching stay in the lower range with little clear directional movement.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Number of programs by category</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>program_count <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(kategori <span class="sc">!=</span> <span class="st">"Diger"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, kategori) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(program_count, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> n, <span class="at">color =</span> kategori)) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">2018</span><span class="sc">:</span><span class="dv">2025</span>) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Number of Programs by Category (2018-2025)"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Number of Programs"</span>, <span class="at">color =</span> <span class="st">"Category"</span>) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-category-trend-count" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-category-trend-count-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="project_files/figure-html/fig-category-trend-count-1.png" class="img-fluid figure-img" width="1056">
+<img src="project_files/figure-html/fig-category-trend-count-1.png" class="img-fluid figure-img" width="768">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-category-trend-count-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Number of programs per field category from 2018 to 2025.
@@ -538,11 +611,35 @@ Figure&nbsp;3: Number of programs per field category from 2018 to 2025.
 <section id="engineering-sub-field-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="engineering-sub-field-analysis">3.3 Engineering Sub-field Analysis</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Engineering sub-field score trends</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>top_eng <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(kategori <span class="sc">==</span> <span class="st">"Muhendislik"</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>         bolum_grubu <span class="sc">!=</span> <span class="st">"Diger Muhendislik"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(bolum_grubu) <span class="sc">|&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">|&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">6</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(bolum_grubu)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>eng_trend <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(bolum_grubu <span class="sc">%in%</span> top_eng) <span class="sc">|&gt;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, bolum_grubu) <span class="sc">|&gt;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_puan =</span> <span class="fu">mean</span>(puan, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(eng_trend, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> avg_puan, <span class="at">color =</span> bolum_grubu)) <span class="sc">+</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">2018</span><span class="sc">:</span><span class="dv">2025</span>) <span class="sc">+</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Top 6 Engineering Sub-fields: Admission Score Trend"</span>,</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Average Min Score"</span>, <span class="at">color =</span> <span class="st">"Sub-field"</span>) <span class="sc">+</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-eng-subfield-trend" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-eng-subfield-trend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="project_files/figure-html/fig-eng-subfield-trend-1.png" class="img-fluid figure-img" width="1056">
+<img src="project_files/figure-html/fig-eng-subfield-trend-1.png" class="img-fluid figure-img" width="768">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eng-subfield-trend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: Average minimum admission score trend for the top 6 engineering sub-fields.
@@ -553,11 +650,24 @@ Figure&nbsp;4: Average minimum admission score trend for the top 6 engineering s
 </div>
 <p>As shown in <a href="#fig-eng-subfield-trend" class="quarto-xref">Figure&nbsp;4</a>, among the six sub-fields, computer engineering has held the highest average scores for most of the period and shows a strong recovery toward 2025, reaching around 400. Software engineering follows a similar upward trajectory in recent years. Industrial engineering and electrical-electronics engineering have tracked each other closely throughout, sitting in the mid-range. Civil engineering consistently sits at the bottom of the group and shows the widest dip in 2021, suggesting it was more sensitive to whatever data issue affected that year. The overall trend across all sub-fields is a convergence upward in 2025, which may reflect a genuine increase in competition across engineering as a whole.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>State vs Private engineering programs</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(kategori <span class="sc">==</span> <span class="st">"Muhendislik"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>         unitur <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"DEVLET"</span>, <span class="st">"VAKIF"</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>         year <span class="sc">==</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> unitur, <span class="at">y =</span> puan, <span class="at">fill =</span> unitur)) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"DEVLET"</span> <span class="ot">=</span> <span class="st">"#2E86AB"</span>, <span class="st">"VAKIF"</span> <span class="ot">=</span> <span class="st">"#F39C12"</span>)) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"State vs Private: Engineering Score Distribution (2024)"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Minimum Admission Score"</span>) <span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-eng-state-private" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-eng-state-private-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="project_files/figure-html/fig-eng-state-private-1.png" class="img-fluid figure-img" width="960">
+<img src="project_files/figure-html/fig-eng-state-private-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eng-state-private-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5: Minimum admission score distribution for state and private engineering programs in 2024.
@@ -571,11 +681,28 @@ Figure&nbsp;5: Minimum admission score distribution for state and private engine
 <section id="regional-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="regional-analysis">3.4 Regional Analysis</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Top 10 cities by number of programs</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>top_cities <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(il), il <span class="sc">!=</span> <span class="st">""</span>, year <span class="sc">==</span> <span class="dv">2024</span>, kategori <span class="sc">!=</span> <span class="st">"Diger"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(il) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_programs =</span> <span class="fu">n</span>(),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">avg_puan =</span> <span class="fu">round</span>(<span class="fu">mean</span>(puan, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n_programs)) <span class="sc">|&gt;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(top_cities, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(il, n_programs), <span class="at">y =</span> n_programs)) <span class="sc">+</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#2E86AB"</span>) <span class="sc">+</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Top 10 Cities by Number of Programs (2024)"</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Number of Programs"</span>) <span class="sc">+</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-regional-top-cities" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-regional-top-cities-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="project_files/figure-html/fig-regional-top-cities-1.png" class="img-fluid figure-img" width="960">
+<img src="project_files/figure-html/fig-regional-top-cities-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-regional-top-cities-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;6: Top 10 cities in Turkey by number of university programs in 2024.
@@ -589,26 +716,30 @@ Figure&nbsp;6: Top 10 cities in Turkey by number of university programs in 2024.
 <section id="trend-prediction" class="level2">
 <h2 class="anchored" data-anchor-id="trend-prediction">3.5 Trend Prediction</h2>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>Linear model summary:</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  Coefficient (yearly change): -3.38 </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  R-squared: 0.028 </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  Predicted 2026 avg score: 332.6 </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
+<details class="code-fold">
+<summary>Linear trend model for Computer Engineering</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>bilgisayar <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(bolum_grubu <span class="sc">==</span> <span class="st">"Bilgisayar Muh."</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_puan =</span> <span class="fu">mean</span>(puan, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(avg_puan <span class="sc">~</span> year, <span class="at">data =</span> bilgisayar)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>pred_2026 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">year =</span> <span class="dv">2026</span>))</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bilgisayar, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> avg_puan)) <span class="sc">+</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"#2E86AB"</span>) <span class="sc">+</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">"#E74C3C"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">2018</span><span class="sc">:</span><span class="dv">2026</span>, <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">2018</span>, <span class="dv">2026</span>)) <span class="sc">+</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Computer Engineering: Score Trend with Linear Prediction"</span>,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Average Min Score"</span>,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Predicted 2026 score: "</span>, <span class="fu">round</span>(pred_2026, <span class="dv">1</span>))) <span class="sc">+</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-trend-prediction" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-trend-prediction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="project_files/figure-html/fig-trend-prediction-1.png" class="img-fluid figure-img" width="960">
+<img src="project_files/figure-html/fig-trend-prediction-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-trend-prediction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;7: Linear trend model fitted to computer engineering average admission scores, with prediction for 2026.
