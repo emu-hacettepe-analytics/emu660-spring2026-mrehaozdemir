@@ -1,6 +1,8 @@
 ---
 title: "Trends in University Department Preferences in Turkey (2018–2025)"
 author: "Muhammed Reha Özdemir and Yeşim Kaya"
+abstract: |
+  This study analyzes university department preference trends in Turkey between 2018 and 2025 using YÖK Atlas data. Seven major field categories are examined through admission scores and program counts. The findings show that medicine and dentistry/pharmacy remain the most competitive fields throughout the period, computer engineering leads among engineering sub-fields with a strong upward trend toward 2025, and state universities maintain a slight score advantage over private ones. A simple linear model is also applied to project future score trends for computer engineering. The results offer a data-driven perspective on how student preferences and higher education supply have evolved over time in Turkey.
 format:
   html:
     code-fold: true
@@ -24,12 +26,6 @@ library(ggplot2)
 library(tidyr)
 library(data.table)
 ```
-
-::: {.content-visible when-format="pdf"}
-**Abstract**
-
-This study analyzes university department preference trends in Turkey between 2018 and 2025 using YÖK Atlas data. Seven major field categories are examined through admission scores and program counts. The findings show that medicine and dentistry/pharmacy remain the most competitive fields throughout the period, computer engineering leads among engineering sub-fields with a strong upward trend toward 2025, and state universities maintain a slight score advantage over private ones. A simple linear model is also applied to project future score trends for computer engineering. The results offer a data-driven perspective on how student preferences and higher education supply have evolved over time in Turkey.
-:::
 
 # 1. Project Overview and Scope
 
