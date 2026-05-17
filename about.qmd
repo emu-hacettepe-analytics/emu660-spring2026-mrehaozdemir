@@ -5,40 +5,40 @@ sidebar: false
 
 ![](assets/images/vesikalik.jpeg){fig-align="center" width="300"}
 
-<div style="text-align: center; margin-top: 10px;">
+::: {style="text-align: center; margin-top: 10px;"}
 [📄 Download CV](files/cv.pdf)
-</div>
+:::
 
----
+------------------------------------------------------------------------
 
 ## 🎓 Education
 
-- **M.S., Industrial Engineering** — Hacettepe University, Turkey *(2025 – ongoing)*
-- **Erasmus+ Exchange Program** — Montanuniversität Leoben, Austria *(2024)*
-- **B.S., Industrial Engineering** — Balıkesir University, Turkey *(2021 – 2025)*
+-   **M.S., Industrial Engineering** — Hacettepe University, Turkey *(2025 – ongoing)*
+-   **Erasmus+ Exchange Program** — Montanuniversität Leoben, Austria *(2024)*
+-   **B.S., Industrial Engineering** — Balıkesir University, Turkey *(2021 – 2025)*
 
----
+------------------------------------------------------------------------
 
 ## 💼 Work Experience
 
 ### Internships
 
-- **Engineering Intern** — BEST Transformer A.Ş. *(2025)*
+-   **Engineering Intern** — BEST Transformer A.Ş. *(2025)*
 
----
+------------------------------------------------------------------------
 
 ## 🛠️ Competencies
 
-| Category | Tools |
-|---|---|
-| Programming | R, Python |
+| Category         | Tools                         |
+|------------------|-------------------------------|
+| Programming      | R, Python                     |
 | Data & Reporting | Quarto, Git, Microsoft Office |
-| Simulation | Rockwell Arena |
-| CAD | SolidWorks, AutoCAD |
-| ERP | Oracle ERP |
+| Simulation       | Rockwell Arena                |
+| CAD              | SolidWorks, AutoCAD           |
+| ERP              | Oracle ERP                    |
 
----
+------------------------------------------------------------------------
 
 ## 🎯 Hobbies
 
-Psychology &nbsp;·&nbsp; Philosophy &nbsp;·&nbsp; Basketball &nbsp;·&nbsp; Violin
+Psychology  ·  Philosophy  ·  Basketball  ·  Violin

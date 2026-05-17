@@ -9,16 +9,16 @@ Hey there! I'm **Muhammed Reha Özdemir**, an industrial engineering graduate st
 📊 Currently working on: **Trends in University Department Preferences in Turkey (2018–2025)**
 :::
 
----
+------------------------------------------------------------------------
 
 ## What's here?
 
-**[About Me](about.qmd)** — Who I am, where I've been, and what tools I pretend to know.
+[**About Me**](about.qmd) — Who I am, where I've been, and what tools I pretend to know.
 
-**[My Posts](posts.qmd)** — Data-driven takes on things that caught my attention.
+[**My Posts**](posts.qmd) — Data-driven takes on things that caught my attention.
 
-**[EMU660 Coursework](assignments.qmd)** — Assignments and a full-scale data analytics project for the Decision Making with Analytics course at Hacettepe University.
+[**EMU660 Coursework**](assignments.qmd) — Assignments and a full-scale data analytics project for the Decision Making with Analytics course at Hacettepe University.
 
----
+------------------------------------------------------------------------
 
 *Built with [Quarto](https://quarto.org) and too much coffee. ☕*
