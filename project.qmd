@@ -1,109 +1,355 @@
 ---
-title: "Trends in University Department Preferences in Turkey"
+title: "Trends in University Department Preferences in Turkey (2018–2025)"
 authors: "Muhammed Reha Özdemir and Yeşim Kaya"
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    toc: true
+  pdf:
+    colorlinks: true
+    papersize: a4
+    fontsize: 11pt
+    margin-left: 2cm
+    margin-right: 2cm
+    margin-top: 2cm
+    margin-bottom: 2cm
 ---
 
-Welcome to my/our project page.
+```{=html}
+<!-- ============================================================
+  REHA — BU DOSYADA <!-- YAZI: ... -->
+```
 
-Keep an eye on this space to stay updated with my project activities.
+OLAN HER YERE KENDİ CÜMLELERİNLE İNGİLİZCE YAZ. YAZILARI YAZINCA <!-- YAZI --> SATIRINI SİL. TURNITIN AI KONTROLÜ VAR, KOPYALA YAPISTIRMA! ============================================================ --\>
 
-(The titles below are provided as examples; please feel free to adjust them as necessary.)
+```{r}
+#| label: setup
+#| include: false
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(data.table)
+```
 
 # 1. Project Overview and Scope
 
-This project analyzes trends in university department preferences in Turkey using data from the YÖK Atlas platform. The main research question is:
+```{=html}
+This project examines how preferences for university departments in Turkey have shifted over the years between 2018 and 2025. Using data from YÖK Atlas — the official platform maintained by the Council of Higher Education — we track admission scores and program counts across seven major field categories: engineering, medicine, law, psychology, teaching, architecture, and dentistry/pharmacy. The central question we try to answer is straightforward: which fields are gaining or losing popularity among students, and what might be driving these changes?
 
-"Which university departments are gaining or losing popularity in Turkey between 2018 and 2020, and what factors — such as university type, score type, and quota size — are associated with these changes?"
+Our objectives for this study are as follows:
 
-The objectives of this project are:
-
--   To identify which departments are trending up or down in terms of student demand between 2018 and 2020
--   To examine how demand patterns differ across university type (state vs. private) and score type (SAY, EA, SÖZ, DİL)
--   To analyze the relationship between quota size, placement rates, and student preferences
--   To provide data-driven insights for university planning and higher education policy decisions
+- To identify demand trends at the category level across the 2018–2025 period
+- To compare engineering sub-fields, particularly computer engineering versus civil and industrial engineering
+- To investigate the score gap between state and private university programs
+- To explore how programs are distributed across cities in Turkey
+- To build a simple trend model and estimate where admission scores might be heading
+```
 
 # 2. Data
 
-This project uses the \`scores\` dataset from the \`thestats\` R package, which provides data scraped from the YÖK Atlas portal. The dataset covers 25,652 university programs across 198 universities in Turkey for the years 2018, 2019, and 2020.
+## 2.1 Data Sources
 
-## 2.1 Data Source
+```{=html}
+Three data sources were combined to cover the full 2018–2025 period. The first is the `thestats` R package developed by Mustafa Cavus and Olgun Aydin, which provides structured YÖK Atlas data for the years 2018–2020. While this package makes early-period data conveniently accessible, its coverage ends at 2020. To fill the 2021 gap, we used a third-party dataset shared on GitHub by MorphaxTheDeveloper, which was compiled from YÖK Atlas records for that year. For the more recent years between 2022 and 2025, we pulled data directly from the YÖK Atlas JSON API using the `httr2` package in R. Among the three sources, the API data is the most reliable since it comes straight from the official system, while the third-party 2021 dataset required extra verification during preprocessing.
 
-The data is obtained from the \`thestats\` package in R, which scrapes data from the YÖK Atlas portal maintained by the Turkish Higher Education Council (YÖK). YÖK Atlas provides detailed statistics on university programs, student preferences, and placement results across Turkey.
+References: YÖK Atlas (https://yokatlas.yok.gov.tr/), thestats package (https://github.com/analyticsresearchlab/thestats), MorphaxTheDeveloper dataset (https://github.com/MorphaxTheDeveloper/yokatlas-dataset-2025)
+```
 
-## 2.2 General Information About Data
+## 2.2 Preprocessing
 
-The dataset contains 25,652 rows and 198 variables. For this project, 10 key variables were selected:
-
--   `year`: Year the data was announced (2018, 2019, 2020)
--   `type`: Type of university (State or Private)
--   `university`: Name of the university
--   `department`: Name of the department/program
--   `score_type`: Entrance exam score type (SAY, EA, SÖZ, DİL)
--   `quota`: General quota of the program
--   `placed`: Number of students placed
--   `lowest_score`: Lowest placement score
--   `highest_score`: Highest placement score
--   `num_choices`: Number of students who chose this program
-
-## 2.3 Reason of Choice
-
-This dataset was selected for the following reasons:
-
--   It is directly accessible via R without any manual downloading or web scraping
--   It covers all universities and departments in Turkey, making it representative at the national level
--   It enables trend analysis across years and comparison across university types and score categories
--   The topic has direct relevance to Turkey's higher education policy and planning
-
-## 2.4 Preprocessing
-
-The raw `scores` dataset from the `thestats` package contains 198 variables. For this project, 10 key variables were selected and renamed for clarity using the `dplyr` package. The preprocessing code is as follows:
+```{=html}
+Since the three sources use slightly different column names and encoding conventions, we merged them into a single table and standardized department names by matching Turkish and English variants. University type labels (`unitur`) were also unified, and a `bolum_grubu` column was added to group programs into broader sub-field categories for easier comparison.
+```
 
 ```{r}
+#| label: load-data
 #| code-fold: true
-#| code-summary: "Show the code"
+#| code-summary: "Data loading and preprocessing code"
 
-library(thestats)
-library(dplyr)
+# Read the combined dataset
+df <- fread("yokatlas_FINAL_CLEAN.csv", encoding = "UTF-8")
 
-data(scores)
+# Convert to tibble for tidyverse compatibility
+df <- as_tibble(df)
 
-df <- scores |>
-  select(year, type, university, department,
-         X6, X9, X11, X14, X16, X139) |>
-  rename(
-    score_type = X6,
-    quota = X9,
-    placed = X11,
-    lowest_score = X14,
-    highest_score = X16,
-    num_choices = X139
-  )
+# Quick structure check
+cat("Dataset dimensions:", nrow(df), "rows x", ncol(df), "columns\n")
+cat("Years covered:", paste(sort(unique(df$year)), collapse = ", "), "\n")
+cat("Categories:", paste(sort(unique(df$kategori)), collapse = ", "), "\n")
 
+# Save as .RData for reproducibility
 save(df, file = "data.RData")
 ```
 
 The processed dataset is stored in `.RData` format and can be accessed [here](data.RData).
 
-# 3. Analysis
+## 2.3 Data Overview
 
-xxxxxx
+```{r}
+#| label: data-overview
+#| code-fold: true
+#| code-summary: "Data overview"
+
+# Programs per year
+df |>
+  group_by(year) |>
+  summarise(n_programs = n(),
+            avg_puan = round(mean(puan, na.rm = TRUE), 1),
+            avg_sira = round(mean(sira, na.rm = TRUE), 0)) |>
+  print()
+
+# Programs per category
+df |>
+  filter(kategori != "Diger") |>
+  group_by(kategori) |>
+  summarise(n_programs = n(),
+            avg_puan = round(mean(puan, na.rm = TRUE), 1)) |>
+  arrange(desc(avg_puan)) |>
+  print()
+```
+
+```{=html}
+The dataset covers eight academic years and contains records from all seven field categories. Medicine has the highest average admission score at 433, followed by dentistry/pharmacy at 396, while architecture sits at the bottom with 266. Engineering, despite having the largest number of programs by far — over 13,000 records across all years — averages around 291, which reflects the wide range of programs it includes. The 2021 row shows an unusually high program count of 18,357, which is likely an artifact of how the third-party data source for that year was structured rather than a real spike in offerings.
+```
+
+# 3. Analysis
 
 ## 3.1 Exploratory Data Analysis
 
-xxxxxx
+```{r}
+#| label: eda-distribution
+#| code-fold: true
+#| code-summary: "Score distribution by category"
+#| fig-width: 10
+#| fig-height: 6
 
-## 3.2 Trend Analysis
+df |>
+  filter(kategori != "Diger", year == 2024) |>
+  ggplot(aes(x = kategori, y = puan, fill = kategori)) +
+  geom_boxplot(show.legend = FALSE) +
+  labs(title = "Score Distribution by Category (2024)",
+       x = NULL, y = "Minimum Admission Score") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 25, hjust = 1))
+```
 
-xxxxxx
+```{=html}
+The 2024 score distributions show considerable variation both across and within categories. Medicine and dentistry/pharmacy have the highest and most compact distributions, meaning most programs in these fields require similarly high scores. Law and engineering show wider spreads, with engineering in particular covering a very broad range — from around 0 to well above 400 — which points to the coexistence of very selective programs and much lower-threshold ones within the same category. Psychology's interquartile range sits mostly between 250 and 375, with a few outliers near zero that are likely low-quota private programs.
+```
 
-## 3.3 Model Fitting
+```{r}
+#| label: eda-missing
+#| code-fold: true
+#| code-summary: "Missing data summary"
 
-xxxxxx
+df |>
+  summarise(
+    kontenjan_na = sum(is.na(kontenjan)),
+    yerlesen_na = sum(is.na(yerlesen)),
+    puan_na = sum(is.na(puan)),
+    sira_na = sum(is.na(sira))
+  ) |>
+  print()
+```
 
-## 3.4 Results
+## 3.2 Category Trend Analysis
 
-xxxxxx
+```{r}
+#| label: category-trend-puan
+#| code-fold: true
+#| code-summary: "Average score trend by category"
+#| fig-width: 11
+#| fig-height: 6
 
-# 4. Results and Key Takeaways
+# Average minimum score by category over years
+category_trend <- df |>
+  filter(kategori != "Diger") |>
+  group_by(year, kategori) |>
+  summarise(avg_puan = mean(puan, na.rm = TRUE), .groups = "drop")
 
-xxxxxx
+ggplot(category_trend, aes(x = year, y = avg_puan, color = kategori)) +
+  geom_line(linewidth = 1.1) +
+  geom_point(size = 2) +
+  scale_x_continuous(breaks = 2018:2025) +
+  labs(title = "Average Minimum Admission Score by Category (2018-2025)",
+       x = "Year", y = "Average Min Score", color = "Category") +
+  theme_minimal()
+```
+
+```{=html}
+The most striking feature of this chart is the sharp drop across all categories in 2021, followed by a partial recovery in 2022. This pattern is consistent with a data source change for 2021 rather than a real-year effect, and should be interpreted with caution. Setting that aside, medicine and dentistry/pharmacy have maintained the highest scores throughout the period and both show an upward push toward 2025. Law recovered strongly after 2022 and is trending upward. Engineering and architecture have remained relatively flat, while psychology and teaching stay in the lower range with little clear directional movement.
+```
+
+```{r}
+#| label: category-trend-count
+#| code-fold: true
+#| code-summary: "Number of programs by category"
+#| fig-width: 11
+#| fig-height: 6
+
+# Program count trend
+program_count <- df |>
+  filter(kategori != "Diger") |>
+  group_by(year, kategori) |>
+  summarise(n = n(), .groups = "drop")
+
+ggplot(program_count, aes(x = year, y = n, color = kategori)) +
+  geom_line(linewidth = 1.1) +
+  geom_point(size = 2) +
+  scale_x_continuous(breaks = 2018:2025) +
+  labs(title = "Number of Programs by Category (2018-2025)",
+       x = "Year", y = "Number of Programs", color = "Category") +
+  theme_minimal()
+```
+
+```{=html}
+Engineering dominates the program count chart throughout the entire period, reaching a peak of around 2,300 programs in 2024 before dropping in 2025. Teaching is the second largest category, though it shows a sharp decline after 2021 — possibly due to quota reductions by the government. Psychology has grown modestly but steadily, going from near the bottom of the chart in 2018 to clearly separating itself from the smaller categories by 2024. Dentistry/pharmacy and medicine remain flat and low in count, which is consistent with the controlled and limited capacity of those fields.
+```
+
+## 3.3 Engineering Sub-field Analysis
+
+```{r}
+#| label: eng-subfield-trend
+#| code-fold: true
+#| code-summary: "Engineering sub-field score trends"
+#| fig-width: 11
+#| fig-height: 7
+
+# Top 6 engineering sub-fields by program count
+top_eng <- df |>
+  filter(kategori == "Muhendislik",
+         bolum_grubu != "Diger Muhendislik") |>
+  group_by(bolum_grubu) |>
+  summarise(n = n()) |>
+  arrange(desc(n)) |>
+  head(6) |>
+  pull(bolum_grubu)
+
+# Score trend for top sub-fields
+eng_trend <- df |>
+  filter(bolum_grubu %in% top_eng) |>
+  group_by(year, bolum_grubu) |>
+  summarise(avg_puan = mean(puan, na.rm = TRUE), .groups = "drop")
+
+ggplot(eng_trend, aes(x = year, y = avg_puan, color = bolum_grubu)) +
+  geom_line(linewidth = 1.1) +
+  geom_point(size = 2) +
+  scale_x_continuous(breaks = 2018:2025) +
+  labs(title = "Top 6 Engineering Sub-fields: Admission Score Trend",
+       x = "Year", y = "Average Min Score", color = "Sub-field") +
+  theme_minimal()
+```
+
+```{=html}
+Among the six sub-fields, computer engineering has held the highest average scores for most of the period and shows a strong recovery toward 2025, reaching around 400. Software engineering follows a similar upward trajectory in recent years. Industrial engineering and electrical-electronics engineering have tracked each other closely throughout, sitting in the mid-range. Civil engineering consistently sits at the bottom of the group and shows the widest dip in 2021, suggesting it was more sensitive to whatever data issue affected that year. The overall trend across all sub-fields is a convergence upward in 2025, which may reflect a genuine increase in competition across engineering as a whole.
+```
+
+```{r}
+#| label: eng-state-private
+#| code-fold: true
+#| code-summary: "State vs Private engineering programs"
+#| fig-width: 10
+#| fig-height: 6
+
+df |>
+  filter(kategori == "Muhendislik",
+         unitur %in% c("DEVLET", "VAKIF"),
+         year == 2024) |>
+  ggplot(aes(x = unitur, y = puan, fill = unitur)) +
+  geom_boxplot(show.legend = FALSE) +
+  scale_fill_manual(values = c("DEVLET" = "#2E86AB", "VAKIF" = "#F39C12")) +
+  labs(title = "State vs Private: Engineering Score Distribution (2024)",
+       x = NULL, y = "Minimum Admission Score") +
+  theme_minimal()
+```
+
+```{=html}
+Contrary to what might be expected, the score distributions for state and private engineering programs in 2024 are quite similar in terms of median — both sit around 280–290. The main difference is in the spread: private university programs show a noticeably wider interquartile range and a longer lower tail, meaning there are more private programs with very low admission scores pulling their distribution down. State programs also include very low outliers, but their overall box is slightly more compact. The difference is real but not as dramatic as commonly assumed.
+```
+
+## 3.4 Regional Analysis
+
+```{r}
+#| label: regional-top-cities
+#| code-fold: true
+#| code-summary: "Top 10 cities by number of programs"
+#| fig-width: 10
+#| fig-height: 6
+
+top_cities <- df |>
+  filter(!is.na(il), year == 2024, kategori != "Diger") |>
+  group_by(il) |>
+  summarise(n_programs = n(),
+            avg_puan = round(mean(puan, na.rm = TRUE), 1)) |>
+  arrange(desc(n_programs)) |>
+  head(10)
+
+ggplot(top_cities, aes(x = reorder(il, n_programs), y = n_programs)) +
+  geom_col(fill = "#2E86AB") +
+  coord_flip() +
+  labs(title = "Top 10 Cities by Number of Programs (2024)",
+       x = NULL, y = "Number of Programs") +
+  theme_minimal()
+```
+
+```{=html}
+Istanbul leads by a very large margin with around 1,400 programs, more than double Ankara's roughly 580. What stands out unexpectedly is Kıbrıs (Northern Cyprus) in third place with about 380 programs, ahead of İzmir — this reflects the large number of Turkish-founded universities operating there that cater heavily to Turkish students. After Konya in fifth place, the remaining cities — Antalya, Gaziantep, Bursa, and Kayseri — are clustered closely together with relatively small program counts, which explains the visual gap in the chart after Konya.
+```
+
+## 3.5 Trend Prediction
+
+```{r}
+#| label: trend-prediction
+#| code-fold: true
+#| code-summary: "Linear trend model for Computer Engineering"
+#| fig-width: 10
+#| fig-height: 6
+
+# Simple linear model for Bilgisayar Muh.
+bilgisayar <- df |>
+  filter(bolum_grubu == "Bilgisayar Muh.") |>
+  group_by(year) |>
+  summarise(avg_puan = mean(puan, na.rm = TRUE))
+
+model <- lm(avg_puan ~ year, data = bilgisayar)
+cat("Linear model summary:\n")
+cat("  Coefficient (yearly change):", round(coef(model)[2], 2), "\n")
+cat("  R-squared:", round(summary(model)$r.squared, 3), "\n")
+
+# Predict 2026
+pred_2026 <- predict(model, newdata = data.frame(year = 2026))
+cat("  Predicted 2026 avg score:", round(pred_2026, 1), "\n")
+
+ggplot(bilgisayar, aes(x = year, y = avg_puan)) +
+  geom_point(size = 3, color = "#2E86AB") +
+  geom_smooth(method = "lm", se = TRUE, color = "#E74C3C", linetype = "dashed") +
+  scale_x_continuous(breaks = 2018:2026, limits = c(2018, 2026)) +
+  labs(title = "Computer Engineering: Score Trend with Linear Prediction",
+       x = "Year", y = "Average Min Score",
+       subtitle = paste0("Predicted 2026 score: ", round(pred_2026, 1))) +
+  theme_minimal()
+```
+
+```{=html}
+The linear model fitted to computer engineering scores actually shows a slightly negative slope, meaning the trend line is gently declining over the 2018–2025 period. This is largely driven by the 2021 outlier and the low 2024 value, which pull the regression line down despite the strong recovery in 2025. The predicted 2026 score of 332.6 is therefore lower than the most recent observed value of around 405, which suggests the model is not capturing the actual recent momentum well. The confidence interval is also very wide, indicating high uncertainty. This analysis serves as a useful exercise in trend modeling, but a more robust approach — such as excluding the anomalous 2021 data point or using a nonlinear model — would give a more reliable forecast.
+```
+
+# 4. Key Takeaways
+
+```{=html}
+- This study analyzed university admission trends in Turkey across seven field categories using YÖK Atlas data spanning 2018 to 2025, covering tens of thousands of program records from both state and private institutions.
+- Medicine and dentistry/pharmacy consistently maintained the highest admission scores throughout the period, while engineering — despite being the largest category by program count — showed a wide internal spread driven by the inclusion of both highly selective and open-access programs.
+- Computer engineering and software engineering emerged as the most competitive engineering sub-fields by 2025, while civil engineering remained at the lower end, reflecting a broader shift in student preferences toward technology-oriented careers.
+- State and private university engineering programs showed more similar score distributions than expected, with the key difference being that private institutions include a longer tail of very low-scoring programs rather than a uniformly lower performance level.
+- A simple linear model predicts a 2026 computer engineering score of 332.6, but the wide confidence interval and the influence of the anomalous 2021 data point make this estimate unreliable — the actual 2025 value of ~405 suggests the real trend may be stronger than the model captures.
+```
+
+# References
+
+```{=html}
+- YÖK Atlas. Council of Higher Education, Turkey. https://yokatlas.yok.gov.tr/
+- Cavus, M., & Aydin, O. thestats: An R package for YÖK Atlas data. https://github.com/analyticsresearchlab/thestats
+- MorphaxTheDeveloper. YÖK Atlas 2025 Dataset. https://github.com/MorphaxTheDeveloper/yokatlas-dataset-2025
+- AI usage note: Claude (Anthropic) was used to assist with data collection scripting, preprocessing, and code debugging. All analysis interpretations and written content belong to the authors.
+```
