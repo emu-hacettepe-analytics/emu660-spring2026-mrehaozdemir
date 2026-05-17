@@ -77,17 +77,17 @@ The processed dataset is stored in `.RData` format and can be accessed [here](da
 
 The dataset contains the following key columns:
 
-| Column        | Description                                                       |
-|---------------|-------------------------------------------------------------------|
-| `year`        | Academic year of admission                                        |
-| `kategori`    | Field category (e.g., Muhendislik, Tip)                           |
-| `bolum_grubu` | Sub-grouping of programs (engineering sub-fields + main fields)   |
-| `il`          | City where the university is located                              |
-| `unitur`      | University type: DEVLET (state) or VAKIF (private)                |
-| `puan`        | Minimum admission score for the program                           |
-| `sira`        | Admission rank corresponding to the minimum score                 |
-| `kontenjan`   | Total quota (capacity) of the program                             |
-| `yerlesen`    | Number of students actually enrolled                              |
+| Column | Description |
+|----------------|--------------------------------------------------------|
+| `year` | Academic year of admission |
+| `kategori` | Field category (e.g., Muhendislik, Tip) |
+| `bolum_grubu` | Sub-grouping of programs (engineering sub-fields + main fields) |
+| `il` | City where the university is located |
+| `unitur` | University type: DEVLET (state) or VAKIF (private) |
+| `puan` | Minimum admission score for the program |
+| `sira` | Admission rank corresponding to the minimum score |
+| `kontenjan` | Total quota (capacity) of the program |
+| `yerlesen` | Number of students actually enrolled |
 
 ```{r}
 #| label: data-overview
@@ -433,4 +433,4 @@ This project tracked how Turkish university preferences have evolved across seve
 -   Cavus, M., & Aydin, O. *thestats: An R package for YÖK Atlas data.* <https://github.com/analyticsresearchlab/thestats>
 -   MorphaxTheDeveloper. *YÖK Atlas 2025 Dataset.* <https://github.com/MorphaxTheDeveloper/yokatlas-dataset-2025>
 
-*AI usage note: Claude (Anthropic) was used to assist with data collection scripting, preprocessing of multiple data sources, code debugging, and an initial draft of the written sections. The authors reviewed, rewrote, and verified all content; all analysis interpretations and final wording belong to the authors.*
+*AI usage note: Claude was used to assist with data collection scripting, preprocessing of multiple data sources and code debugging. All analysis interpretations and written content belongs to the authors.*
