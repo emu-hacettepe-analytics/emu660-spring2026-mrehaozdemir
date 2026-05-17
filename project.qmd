@@ -27,6 +27,8 @@ library(data.table)
 
 # 1. Project Overview and Scope
 
+**Abstract:** This study analyzes university department preference trends in Turkey between 2018 and 2025 using YÖK Atlas data. Seven major field categories are examined through admission scores and program counts. The findings show that medicine and dentistry/pharmacy remain the most competitive fields throughout the period, computer engineering leads among engineering sub-fields with a strong upward trend toward 2025, and state universities maintain a slight score advantage over private ones. A simple linear model is also applied to project future score trends for computer engineering. The results offer a data-driven perspective on how student preferences and higher education supply have evolved over time in Turkey.
+
 This project examines how preferences for university departments in Turkey have shifted over the years between 2018 and 2025. Using data from YÖK Atlas — the official platform maintained by the Council of Higher Education — we track admission scores and program counts across seven major field categories: engineering, medicine, law, psychology, teaching, architecture, and dentistry/pharmacy. The central question we try to answer is straightforward: which fields are gaining or losing popularity among students, and what might be driving these changes?
 
 Our objectives for this study are as follows:
@@ -73,6 +75,20 @@ The processed dataset is stored in `.RData` format and can be accessed [here](da
 
 ## 2.3 Data Overview
 
+The dataset contains the following key columns:
+
+| Column        | Description                                        |
+|---------------|----------------------------------------------------|
+| `year`        | Academic year of admission                         |
+| `kategori`    | Field category (e.g., Muhendislik, Tip)            |
+| `bolum_grubu` | Engineering sub-field grouping                     |
+| `il`          | City where the university is located               |
+| `unitur`      | University type: DEVLET (state) or VAKIF (private) |
+| `puan`        | Minimum admission score for the program            |
+| `sira`        | Admission rank corresponding to the minimum score  |
+| `kontenjan`   | Total quota (capacity) of the program              |
+| `yerlesen`    | Number of students actually enrolled               |
+
 ```{r}
 #| label: data-overview
 #| code-fold: true
@@ -103,9 +119,10 @@ The dataset covers eight academic years and contains records from all seven fiel
 ## 3.1 Exploratory Data Analysis
 
 ```{r}
-#| label: eda-distribution
+#| label: fig-eda-distribution
 #| code-fold: true
 #| code-summary: "Score distribution by category"
+#| fig-cap: "Minimum admission score distribution across field categories in 2024."
 #| fig-width: 10
 #| fig-height: 6
 
@@ -119,7 +136,7 @@ df |>
   theme(axis.text.x = element_text(angle = 25, hjust = 1))
 ```
 
-The 2024 score distributions show considerable variation both across and within categories. Medicine and dentistry/pharmacy have the highest and most compact distributions, meaning most programs in these fields require similarly high scores. Law and engineering show wider spreads, with engineering in particular covering a very broad range — from around 0 to well above 400 — which points to the coexistence of very selective programs and much lower-threshold ones within the same category. Psychology's interquartile range sits mostly between 250 and 375, with a few outliers near zero that are likely low-quota private programs.
+As shown in @fig-eda-distribution, the 2024 score distributions show considerable variation both across and within categories. Medicine and dentistry/pharmacy have the highest and most compact distributions, meaning most programs in these fields require similarly high scores. Law and engineering show wider spreads, with engineering in particular covering a very broad range — from around 0 to well above 400 — which points to the coexistence of very selective programs and much lower-threshold ones within the same category. Psychology's interquartile range sits mostly between 250 and 375, with a few outliers near zero that are likely low-quota private programs.
 
 ```{r}
 #| label: eda-missing
@@ -141,9 +158,10 @@ Missing values are present mainly in the `yerlesen` (enrolled students) and `sir
 ## 3.2 Category Trend Analysis
 
 ```{r}
-#| label: category-trend-puan
+#| label: fig-category-trend-puan
 #| code-fold: true
 #| code-summary: "Average score trend by category"
+#| fig-cap: "Average minimum admission score by field category from 2018 to 2025."
 #| fig-width: 11
 #| fig-height: 6
 
@@ -162,12 +180,13 @@ ggplot(category_trend, aes(x = year, y = avg_puan, color = kategori)) +
   theme_minimal()
 ```
 
-The most striking feature of this chart is the sharp drop across all categories in 2021, followed by a partial recovery in 2022. This pattern is consistent with a data source change for 2021 rather than a real-year effect, and should be interpreted with caution. Setting that aside, medicine and dentistry/pharmacy have maintained the highest scores throughout the period and both show an upward push toward 2025. Law recovered strongly after 2022 and is trending upward. Engineering and architecture have remained relatively flat, while psychology and teaching stay in the lower range with little clear directional movement.
+As shown in @fig-category-trend-puan, the most striking feature of this chart is the sharp drop across all categories in 2021, followed by a partial recovery in 2022. This pattern is consistent with a data source change for 2021 rather than a real-year effect, and should be interpreted with caution. Setting that aside, medicine and dentistry/pharmacy have maintained the highest scores throughout the period and both show an upward push toward 2025. Law recovered strongly after 2022 and is trending upward. Engineering and architecture have remained relatively flat, while psychology and teaching stay in the lower range with little clear directional movement.
 
 ```{r}
-#| label: category-trend-count
+#| label: fig-category-trend-count
 #| code-fold: true
 #| code-summary: "Number of programs by category"
+#| fig-cap: "Number of programs per field category from 2018 to 2025."
 #| fig-width: 11
 #| fig-height: 6
 
@@ -186,14 +205,15 @@ ggplot(program_count, aes(x = year, y = n, color = kategori)) +
   theme_minimal()
 ```
 
-Engineering dominates the program count chart throughout the entire period, reaching a peak of around 2,300 programs in 2024 before dropping in 2025. Teaching is the second largest category, though it shows a sharp decline after 2021 — possibly due to quota reductions by the government. Psychology has grown modestly but steadily, going from near the bottom of the chart in 2018 to clearly separating itself from the smaller categories by 2024. Dentistry/pharmacy and medicine remain flat and low in count, which is consistent with the controlled and limited capacity of those fields.
+As shown in @fig-category-trend-count, engineering dominates the program count chart throughout the entire period, reaching a peak of around 2,300 programs in 2024 before dropping in 2025. Teaching is the second largest category, though it shows a sharp decline after 2021 — possibly due to quota reductions by the government. Psychology has grown modestly but steadily, going from near the bottom of the chart in 2018 to clearly separating itself from the smaller categories by 2024. Dentistry/pharmacy and medicine remain flat and low in count, which is consistent with the controlled and limited capacity of those fields.
 
 ## 3.3 Engineering Sub-field Analysis
 
 ```{r}
-#| label: eng-subfield-trend
+#| label: fig-eng-subfield-trend
 #| code-fold: true
 #| code-summary: "Engineering sub-field score trends"
+#| fig-cap: "Average minimum admission score trend for the top 6 engineering sub-fields."
 #| fig-width: 11
 #| fig-height: 7
 
@@ -222,12 +242,13 @@ ggplot(eng_trend, aes(x = year, y = avg_puan, color = bolum_grubu)) +
   theme_minimal()
 ```
 
-Among the six sub-fields, computer engineering has held the highest average scores for most of the period and shows a strong recovery toward 2025, reaching around 400. Software engineering follows a similar upward trajectory in recent years. Industrial engineering and electrical-electronics engineering have tracked each other closely throughout, sitting in the mid-range. Civil engineering consistently sits at the bottom of the group and shows the widest dip in 2021, suggesting it was more sensitive to whatever data issue affected that year. The overall trend across all sub-fields is a convergence upward in 2025, which may reflect a genuine increase in competition across engineering as a whole.
+As shown in @fig-eng-subfield-trend, among the six sub-fields, computer engineering has held the highest average scores for most of the period and shows a strong recovery toward 2025, reaching around 400. Software engineering follows a similar upward trajectory in recent years. Industrial engineering and electrical-electronics engineering have tracked each other closely throughout, sitting in the mid-range. Civil engineering consistently sits at the bottom of the group and shows the widest dip in 2021, suggesting it was more sensitive to whatever data issue affected that year. The overall trend across all sub-fields is a convergence upward in 2025, which may reflect a genuine increase in competition across engineering as a whole.
 
 ```{r}
-#| label: eng-state-private
+#| label: fig-eng-state-private
 #| code-fold: true
 #| code-summary: "State vs Private engineering programs"
+#| fig-cap: "Minimum admission score distribution for state and private engineering programs in 2024."
 #| fig-width: 10
 #| fig-height: 6
 
@@ -243,14 +264,15 @@ df |>
   theme_minimal()
 ```
 
-Contrary to what might be expected, the score distributions for state and private engineering programs in 2024 are quite similar in terms of median — both sit around 280–290. The main difference is in the spread: private university programs show a noticeably wider interquartile range and a longer lower tail, meaning there are more private programs with very low admission scores pulling their distribution down. State programs also include very low outliers, but their overall box is slightly more compact. The difference is real but not as dramatic as commonly assumed.
+As shown in @fig-eng-state-private, contrary to what might be expected, the score distributions for state and private engineering programs in 2024 are quite similar in terms of median — both sit around 280–290. The main difference is in the spread: private university programs show a noticeably wider interquartile range and a longer lower tail, meaning there are more private programs with very low admission scores pulling their distribution down. State programs also include very low outliers, but their overall box is slightly more compact. The difference is real but not as dramatic as commonly assumed.
 
 ## 3.4 Regional Analysis
 
 ```{r}
-#| label: regional-top-cities
+#| label: fig-regional-top-cities
 #| code-fold: true
 #| code-summary: "Top 10 cities by number of programs"
+#| fig-cap: "Top 10 cities in Turkey by number of university programs in 2024."
 #| fig-width: 10
 #| fig-height: 6
 
@@ -270,14 +292,15 @@ ggplot(top_cities, aes(x = reorder(il, n_programs), y = n_programs)) +
   theme_minimal()
 ```
 
-Istanbul leads by a very large margin with around 1,400 programs, more than double Ankara's roughly 580. What stands out unexpectedly is Kıbrıs (Northern Cyprus) in third place with about 390 programs, ahead of İzmir — this reflects the large number of Turkish-founded universities operating there that cater heavily to Turkish students. After Konya in fifth place, the remaining cities — Antalya, Gaziantep, Bursa, and Kayseri — are all clustered closely together with similar program counts, ranging roughly between 57 and 72.
+As shown in @fig-regional-top-cities, Istanbul leads by a very large margin with around 1,400 programs, more than double Ankara's roughly 580. What stands out unexpectedly is Kıbrıs (Northern Cyprus) in third place with about 390 programs, ahead of İzmir — this reflects the large number of Turkish-founded universities operating there that cater heavily to Turkish students. After Konya in fifth place, the remaining cities — Antalya, Gaziantep, Bursa, and Kayseri — are all clustered closely together with similar program counts, ranging roughly between 57 and 72.
 
 ## 3.5 Trend Prediction
 
 ```{r}
-#| label: trend-prediction
+#| label: fig-trend-prediction
 #| code-fold: true
 #| code-summary: "Linear trend model for Computer Engineering"
+#| fig-cap: "Linear trend model fitted to computer engineering average admission scores, with prediction for 2026."
 #| fig-width: 10
 #| fig-height: 6
 
@@ -306,7 +329,7 @@ ggplot(bilgisayar, aes(x = year, y = avg_puan)) +
   theme_minimal()
 ```
 
-The linear model fitted to computer engineering scores shows a slightly negative slope, meaning the trend line is gently declining over the 2018–2025 period. This is largely driven by the 2021 outlier and the low 2024 value, which pull the regression line down despite the strong recovery in 2025. The predicted 2026 score of 332.6 is therefore lower than the most recent observed value of around 405, which suggests the model is not capturing the actual recent momentum well. The confidence interval is also very wide, indicating high uncertainty. This analysis serves as a useful exercise in trend modeling, but a more robust approach — such as excluding the anomalous 2021 data point or using a nonlinear model — would give a more reliable forecast.
+As shown in @fig-trend-prediction, the linear model fitted to computer engineering scores shows a slightly negative slope, meaning the trend line is gently declining over the 2018–2025 period. This is largely driven by the 2021 outlier and the low 2024 value, which pull the regression line down despite the strong recovery in 2025. The predicted 2026 score of 332.6 is therefore lower than the most recent observed value of around 405, which suggests the model is not capturing the actual recent momentum well. The confidence interval is also very wide, indicating high uncertainty. This analysis serves as a useful exercise in trend modeling, but a more robust approach — such as excluding the anomalous 2021 data point or using a nonlinear model — would give a more reliable forecast.
 
 # 4. Key Takeaways
 
