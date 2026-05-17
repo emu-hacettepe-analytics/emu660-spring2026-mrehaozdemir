@@ -16,13 +16,6 @@ format:
     margin-bottom: 2cm
 ---
 
-```{=html}
-<!-- ============================================================
-  REHA — BU DOSYADA <!-- YAZI: ... -->
-```
-
-OLAN HER YERE KENDİ CÜMLELERİNLE İNGİLİZCE YAZ. YAZILARI YAZINCA <!-- YAZI --> SATIRINI SİL. TURNITIN AI KONTROLÜ VAR, KOPYALA YAPISTIRMA! ============================================================ --\>
-
 ```{r}
 #| label: setup
 #| include: false
