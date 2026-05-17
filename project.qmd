@@ -14,6 +14,7 @@ format:
     margin-right: 2cm
     margin-top: 2cm
     margin-bottom: 2cm
+    echo: false
 ---
 
 ```{r}
