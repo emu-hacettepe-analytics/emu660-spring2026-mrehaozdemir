@@ -1,9 +1,24 @@
 ---
-title: "Reha's Analytics Lab"
+title: "👋 Welcome to Reha's Analytics Lab"
+sidebar: false
 ---
 
-Hello!! My name is Muhammed Reha Özdemir.
+Hey there! I'm **Muhammed Reha Özdemir**, an industrial engineering graduate student at Hacettepe University. This is my personal corner of the internet where I share data analyses, course projects, and the occasional thought that survives peer review by my own brain.
 
-This is my personal webpage.
+::: {.callout-note appearance="minimal"}
+📊 Currently working on: **Trends in University Department Preferences in Turkey (2018–2025)**
+:::
 
-Please stay tuned to follow my works on data analytics, blog posts, and more.
+---
+
+## What's here?
+
+**[About Me](about.qmd)** — Who I am, where I've been, and what tools I pretend to know.
+
+**[My Posts](posts.qmd)** — Data-driven takes on things that caught my attention.
+
+**[EMU660 Coursework](assignments.qmd)** — Assignments and a full-scale data analytics project for the Decision Making with Analytics course at Hacettepe University.
+
+---
+
+*Built with [Quarto](https://quarto.org) and too much coffee. ☕*

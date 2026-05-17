@@ -3,26 +3,26 @@ project:
   output-dir: docs
 
 website:
-  title: "[Reha]'s Analytics Lab"
+  title: "Reha's Analytics Lab"
   navbar:
     search: true
     left:
-      - text: Home
+      - text: "🏠 Home"
         href: index.qmd
-      - text: About Me
+      - text: "👤 About Me"
         href: about.qmd
-      - text: My Posts
+      - text: "📝 My Posts"
         href: posts.qmd
-      - text: "EMU660 Coursework"
+      - text: "📚 EMU660 Coursework"
         menu:
-          - text: Assignments
+          - text: "📋 Assignments"
             href: assignments.qmd
-          - text: Project
+          - text: "📊 Project"
             href: project.qmd
-            
+
     tools:
       - icon: github
-        href: https://twitter.com
+        href: https://github.com
       - icon: twitter
         href: https://twitter.com
       - icon: linkedin
@@ -35,12 +35,14 @@ website:
       contents:
         - assignments.qmd
         - assignments/assignment-1.qmd
-        - assignments/assignment-2.qmd  
+        - assignments/assignment-2.qmd
+
   page-navigation: true
   back-to-top-navigation: true
   page-footer:
-    center: "Hacettepe IE - EMU660 - Spring 2026" 
+    center: "Hacettepe IE - EMU660 - Spring 2026"
     border: true
+
 format:
   html:
     toc: true
@@ -48,6 +50,4 @@ format:
     theme: slate
     css: styles.css
 
-
 editor: visual
-
