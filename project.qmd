@@ -255,7 +255,7 @@ Contrary to what might be expected, the score distributions for state and privat
 #| fig-height: 6
 
 top_cities <- df |>
-  filter(!is.na(il), year == 2024, kategori != "Diger") |>
+  filter(!is.na(il), il != "", year == 2024, kategori != "Diger") |>
   group_by(il) |>
   summarise(n_programs = n(),
             avg_puan = round(mean(puan, na.rm = TRUE), 1)) |>
@@ -270,7 +270,7 @@ ggplot(top_cities, aes(x = reorder(il, n_programs), y = n_programs)) +
   theme_minimal()
 ```
 
-Istanbul leads by a very large margin with around 1,400 programs, more than double Ankara's roughly 580. What stands out unexpectedly is Kıbrıs (Northern Cyprus) in third place with about 380 programs, ahead of İzmir — this reflects the large number of Turkish-founded universities operating there that cater heavily to Turkish students. After Konya in fifth place, the remaining cities — Antalya, Gaziantep, Bursa, and Kayseri — are clustered closely together with relatively small program counts, which explains the visual gap in the chart after Konya.
+Istanbul leads by a very large margin with around 1,400 programs, more than double Ankara's roughly 580. What stands out unexpectedly is Kıbrıs (Northern Cyprus) in third place with about 390 programs, ahead of İzmir — this reflects the large number of Turkish-founded universities operating there that cater heavily to Turkish students. After Konya in fifth place, the remaining cities — Antalya, Gaziantep, Bursa, and Kayseri — are all clustered closely together with similar program counts, ranging roughly between 57 and 72.
 
 ## 3.5 Trend Prediction
 
