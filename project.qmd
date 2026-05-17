@@ -14,7 +14,9 @@ format:
     margin-right: 2cm
     margin-top: 2cm
     margin-bottom: 2cm
-    echo: false
+    
+execute:
+  echo: false
 ---
 
 ```{r}
@@ -24,8 +26,6 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 library(data.table)
-
-knitr::opts_chunk$set(echo = knitr::is_html_output())
 ```
 
 # 1. Project Overview and Scope
